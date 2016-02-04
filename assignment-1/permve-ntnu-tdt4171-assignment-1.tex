@@ -1,0 +1,62 @@
+\input{../../permve-ntnu-latex/assignment.tex}
+
+\title{	
+\normalfont \normalsize 
+\textsc{Norwegian University of Science and Technology\\TDT4171 -- Artificial Intelligence Methods} \\ [25pt]
+\horrule{0.5pt} \\[0.4cm]
+\huge Assignment 1 \\
+\horrule{2pt} \\[0.5cm]
+}
+
+\renewcommand\thesection{\Roman{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{section}}
+
+\makeatletter
+\renewcommand{\@seccntformat}[1]{\csname the#1\endcsname\quad}
+\makeatother
+
+\author{Per Magnus Veierland\\permve@stud.ntnu.no}
+
+\date{\normalsize\today}
+
+\begin{document}
+\maketitle
+
+\section{Counting and basic laws of probability}
+
+\subsection{5-card Poker Hands}
+
+\textbf{Consider the domain of dealing 5-card poker hands from a standard deck of 52 cards, under the assumption that the dealer is fair.}
+
+\begin{enumerate}[label=\alph*)]
+\item \textbf{How many atomic events are there in the joint probability distribution\\(i.e., how many 5-card hands are there)?}\\
+The number of 5-card hands in poker can be found with combinatorics by noting that the ordering of the cards do not matter:
+\begin{displaymath}
+\binom{52}{5} =
+\frac{52!}{5!(52 - 5)!} =
+\frac{52 \cdot 51 \cdot 50 \cdot 49 \cdot 48}{5 \cdot 4 \cdot 3 \cdot 2 \cdot 1} =
+\frac{311875200}{120} =
+2598960
+\end{displaymath}
+\item \textbf{What is the probability of each atomic event?}\\
+The probability of each atomic event (being dealt a distinct poker hand) is:
+\begin{displaymath}
+\frac{1}{2598960} \approx 3.84769 \cdot 10^{-7}
+\end{displaymath}
+\item
+\begin{itemize}
+\item \textbf{What is the probability of being dealt a royal straight flush?}\\
+A royal straight flush consists of five cards of the same suit in a sequence, where the top card is an ace. There exists four possible royal straight flush hands; one for each suit. The probability of being dealt a royal straight flush is:
+\begin{displaymath}
+\frac{4}{2598960} \approx 1.53908 \cdot 10^{-6}
+\end{displaymath}
+\item \textbf{What is the probability of being dealt four of a kind?}\\
+Four of a kind is a poker hand where four of the cards have the same rank, and the fifth card can be any other rank and suit. The number of possible four of a kind hands is the number of ranks; 13, multiplied by the number of possible fifth cards; which is any of the twelve remaining ranks from one of four suits:
+\begin{displaymath}
+\frac{13 \cdot 12 \cdot 4}{2598960} \approx 0.00024
+\end{displaymath}
+\end{itemize}
+\end{enumerate}
+
+\end{document}
+

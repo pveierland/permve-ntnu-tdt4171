@@ -8,13 +8,6 @@
 \horrule{2pt} \\[0.5cm]
 }
 
-\renewcommand\thesection{\Roman{section}}
-\renewcommand{\thesubsection}{\thesection.\arabic{section}}
-
-\makeatletter
-\renewcommand{\@seccntformat}[1]{\csname the#1\endcsname\quad}
-\makeatother
-
 \author{Per Magnus Veierland\\permve@stud.ntnu.no}
 
 \date{\normalsize\today}
@@ -26,37 +19,134 @@
 
 \subsection{5-card Poker Hands}
 
-\textbf{Consider the domain of dealing 5-card poker hands from a standard deck of 52 cards, under the assumption that the dealer is fair.}
+\textit{Consider the domain of dealing 5-card poker hands from a standard deck of 52 cards, under the assumption that the dealer is fair.}
 
 \begin{enumerate}[label=\alph*)]
-\item \textbf{How many atomic events are there in the joint probability distribution\\(i.e., how many 5-card hands are there)?}\\
+\item \textit{How many atomic events are there in the joint probability distribution\\(i.e., how many 5-card hands are there)?}\\
 The number of 5-card hands in poker can be found with combinatorics by noting that the ordering of the cards do not matter:
-\begin{displaymath}
+\begin{equation}
 \binom{52}{5} =
 \frac{52!}{5!(52 - 5)!} =
 \frac{52 \cdot 51 \cdot 50 \cdot 49 \cdot 48}{5 \cdot 4 \cdot 3 \cdot 2 \cdot 1} =
 \frac{311875200}{120} =
 2598960
-\end{displaymath}
-\item \textbf{What is the probability of each atomic event?}\\
-The probability of each atomic event (being dealt a distinct poker hand) is:
-\begin{displaymath}
+\end{equation}
+\item \textit{What is the probability of each atomic event?}\\
+The probability of each atomic event, i.e. the probability of any distinct poker hand, is:
+\begin{equation}
 \frac{1}{2598960} \approx 3.84769 \cdot 10^{-7}
-\end{displaymath}
+\end{equation}
 \item
 \begin{itemize}
-\item \textbf{What is the probability of being dealt a royal straight flush?}\\
+\item \textit{What is the probability of being dealt a royal straight flush?}\\
 A royal straight flush consists of five cards of the same suit in a sequence, where the top card is an ace. There exists four possible royal straight flush hands; one for each suit. The probability of being dealt a royal straight flush is:
-\begin{displaymath}
+\begin{equation}
 \frac{4}{2598960} \approx 1.53908 \cdot 10^{-6}
-\end{displaymath}
-\item \textbf{What is the probability of being dealt four of a kind?}\\
+\end{equation}
+\item \textit{What is the probability of being dealt four of a kind?}\\
 Four of a kind is a poker hand where four of the cards have the same rank, and the fifth card can be any other rank and suit. The number of possible four of a kind hands is the number of ranks; 13, multiplied by the number of possible fifth cards; which is any of the twelve remaining ranks from one of four suits:
-\begin{displaymath}
+\begin{equation}
 \frac{13 \cdot 12 \cdot 4}{2598960} \approx 0.00024
-\end{displaymath}
+\end{equation}
 \end{itemize}
 \end{enumerate}
+
+\subsection{Two cards in a deck}
+
+\textit{Two cards are randomly selected from a deck of 52 playing cards.}
+
+\begin{enumerate}[label=\alph*)]
+\item \textit{What is the probability they constitute a pair (that is, that they are the same denomination)?}\\
+The number of pairs in a deck of 52 playing cards is given by the number of ranks times the number of ways to form a pair from four suits within a rank:
+\begin{equation}
+\label{eq:number_of_pairs}
+13 \cdot \binom{4}{2} =
+13 \cdot \frac{4!}{2!(4 - 2)!} =
+13 \cdot \frac{4 \cdot 3}{2} =
+13 \cdot \frac{12}{2} =
+78
+\end{equation}
+The number of ways to draw two cards from a deck of 52 playing cards is given by:
+\begin{equation}
+\binom{52}{2} =
+\frac{52!}{2!(52 - 2)!} =
+\frac{52 \cdot 51}{2} =
+1326
+\end{equation}
+The probability that drawing two cards from a deck of 52 playing cards yields a pair is given by the number of pairs in a deck, divided by the number of ways to draw two cards from a deck:
+\begin{equation}
+\frac{78}{1326} \approx 0.05882
+\end{equation}
+The solution can also be found by reasoning that the probability of the second card drawn will be of the same rank as the first card drawn is given by:
+\begin{equation}
+\frac{4 - 1}{52 - 1} = \frac{3}{51} \approx 0.05882
+\end{equation}
+\item \textit{What is the conditional probability they constitute a pair given that they are of different suits?}\\
+The number of ways to draw two cards of different suits from a deck is given by the number of ways to draw two cards from a deck, minus the number of suits times the number of ways to draw two cards from the same suit:
+\begin{equation}
+\binom{52}{2} - 4 \cdot \binom{13}{2} =
+\frac{52!}{2!(52 - 2)!} - 4 \cdot \frac{13!}{2!(13 - 2)!} =
+\frac{52 \cdot 51}{2} - 4 \cdot \frac{13 \cdot 12}{2} =
+1326 - 312 =
+1014
+\end{equation}
+The number of possible pairs is given by equation~\ref{eq:number_of_pairs}. The number of ways to draw a suit from a deck, given that the cards drawn will be from different suits, is given by:
+\begin{equation}
+\frac{78}{1014} \approx 0.07692
+\end{equation}
+The solution can also be found by reasoning that the probability of the second card drawn will be the same rank as the first card drawn, given that the second card drawn will be from a different suit, is given by:
+\begin{equation}
+\frac{4 - 1}{52 - 13} = \frac{3}{39} \approx 0.07692
+\end{equation}
+\end{enumerate}
+
+\subsection{Conditional probability}
+
+\textit{If the occurrence of B makes A more likely, does the occurrence of A make B more likely? Why?}\vspace{0.1cm}
+We begin with the knowledge that the occurrence of B makes A more likely:
+
+\begin{equation}
+\label{eq:a_given_b_more_likely_than_a}
+P(A \vert B) > P(A)
+\end{equation}
+
+The \textbf{product rule} states that:
+
+\begin{equation}
+P(A \land B) = P(A \vert B) \cdot P(B)
+\qquad\text{and}\qquad
+P(A \land B) = P(B \vert A) \cdot P(A)
+\end{equation}
+
+Equating the two right-hand sides and dividing by $P(B)$ gives us \textbf{Bayes' rule}:
+
+\begin{equation}
+\label{eq:bayes}
+P(A \vert B) = \frac{P(B \vert A) \cdot P(A)}{P(B)}
+\end{equation}
+
+Replacing the left-hand side of the known inequality from equation~\ref{eq:a_given_b_more_likely_than_a} with the right-hand side of equation~\ref{eq:bayes} gives us the inequality:
+
+\begin{equation}
+\frac{P(B \vert A) \cdot P(A)}{P(B)} > P(A)
+\end{equation}
+
+Multiplying both sides by $P(B)$:
+
+\begin{equation}
+P(B \vert A) \cdot P(A) > P(A) \cdot P(B)
+\end{equation}
+
+Dividing both sides by $P(A)$:
+
+\begin{equation}
+\label{eq:b_given_a_more_likely_than_b}
+P(B \vert A) > P(B)
+\end{equation}
+
+This derivation shows that if it is known that the probability of A given B is greater than the prior probability of A (equation~\ref{eq:a_given_b_more_likely_than_a}), it is also true that the probability of B given A is greater than the prior probability of B (equation~\ref{eq:b_given_a_more_likely_than_b}).
+
+Intuitively this makes sense, since knowledge that a cause is more probable given the presence of a symptom would also make the probability of the symptom more likely given the presence of the cause.
 
 \end{document}
 

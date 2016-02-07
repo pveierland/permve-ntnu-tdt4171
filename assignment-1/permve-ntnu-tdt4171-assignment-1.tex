@@ -148,5 +148,25 @@ This derivation shows that if it is known that the probability of A given B is g
 
 Intuitively this makes sense, since knowledge that a cause is more probable given the presence of a symptom would also make the probability of the symptom more likely given the presence of the cause.
 
+\section{Bayesian Network Construction}
+
+We first begin by listing clear causal links:
+
+\begin{itemize}
+\item \textit{Working parents}
+\begin{itemize}
+\item \textit{Household income}
+\end{itemize}
+\item \textit{Religion}
+\begin{itemize}
+\item \textit{Number of children} -- 
+\item \textit{Working parents} -- The study \textit{``Religion, attitudes towards working mothers and wives' full-time employment''} (Guido Heineck 2004) performed with data from Austria, Germany, Italy, the UK, and the USA, found that the effect of religious affiliation leading to a lower likelihood of full-time working wives is weak, and that the attitudes of males' towards female employment has a much greater effect.\\Looking at numbers for Islam specifically, it can be seen that for countries such as Iran (98\% Muslim) or Iraq (97\% Muslim), the female labor force participation rate is 16\% and 14\% -- while Bangladesh (89\% Muslim) has a participation rate of 56\%.\\https://en.wikipedia.org/wiki/Female\_labor\_force\_in\_the\_Muslim\_world\\Given that religious affiliation lends to more traditional views, and that more traditional views lends to a more traditional family, there is likely to be some link between religion and number of working parents. The strength of this link will vary with the country of focus, but it seems clear that the number of working parents is not independent of religion.
+\item \textit{Household income} -- The study \textit{``Religion and wealth: The role of religious affiliation and participation in early adult asset accumulation''} (Lisa A. Keister 2011) found clear links between religious affiliation and wealth, with adherents of Judaism and Episcopalianism attaining the most wealth, believers of Catholicism and mainline Protestants being in the middle, and conservative Protestants achieving the least wealth. The study also found that those who attend religious service achieved more wealth than those who do not. The same researcher states in another study \textit{``Conservative Protestants and Wealth: How Religion Perpetuates Asset Poverty''} (Lisa A. Keister 2008) that ``religion affects wealth indirectly through educational attainment, fertility, and female labour force participation'', but that there can also be direct causal links between religion and income. Direct effects can be explained as adherents to certain religious groups considering that ``money belongs to God'', being more prone to give away their money, and that they may seek to avoid accumulating wealth itself.\\This suggests that there are both indirect and direct causal links between religion and household income.
+\item \textit{Fish-eating habits} -- Vegetarian diets are common in Dharmic based faiths such as Hinduism, Jainism, Sikhism, and Taoism, due to the principle of \textit{Ahimsa}, i.e. ``do no harm''.\\
+Since there are large religious groups where vegetarian diets are common due to the religion, there is a causal link between religion and fish-eating habits; however for Christianity, Judaism, Islam and Atheism, there is likely no significant causal links.
+    \item \textit{Drinking habits} -- Alcohol is not specifically forbidden by the Qur'an, however there is a consensus within Islamic theologians that alcohol is prohibited by Islam as it weakens the conscience of the believer. Some Christian groups such as Baptists and Methodists believe in abstinence from alcohol. Initiated Sikhs cannot drink alcohol, as it is an intoxicant. For Buddhism, alcohol violates the 5th of the \textit{Five Precepts}; ``I undertake the training rule to abstain from fermented drink that causes headlessness''.\\https://en.wikipedia.org/wiki/Religion\_and\_alcohol\\As several large religions have rules prohibiting or discouraging the use of alcohol, there is a direct causal link between religion and drinking habits.
+\end{itemize}
+\end{itemize}
+
 \end{document}
 

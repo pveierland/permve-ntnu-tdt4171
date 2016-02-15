@@ -154,30 +154,56 @@ Intuitively this makes sense, since knowledge that a cause is more probable give
 
 \section{Bayesian Network Construction}
 
-We first begin by listing clear causal links:
+%We first begin by listing clear causal links:
+%
+%\begin{itemize}
+%\item \textbf{Working parents}
+%\begin{itemize}
+%\item \textbf{Household income}
+%\end{itemize}
+%\item \textbf{Religion}
+%\begin{itemize}
+%\item \textbf{Number of children} -- 
+%\item \textbf{Working parents} -- The study \textit{``Religion, attitudes towards working mothers and wives' full-time employment''} (Guido Heineck 2004) performed with data from Austria, Germany, Italy, the UK, and the USA, found that the effect of religious affiliation leading to a lower likelihood of full-time working wives is weak, and that the attitudes of males' towards female employment has a much greater effect.\\Looking at numbers for Islam specifically, it can be seen that for countries such as Iran (98\% Muslim) or Iraq (97\% Muslim), the female labor force participation rate is 16\% and 14\% -- while Bangladesh (89\% Muslim) has a participation rate of 56\%.\\https://en.wikipedia.org/wiki/Female\_labor\_force\_in\_the\_Muslim\_world\\Given that religious affiliation lends to more traditional views, and that more traditional views lends to a more traditional family, there is likely to be some link between religion and number of working parents. The strength of this link will vary with the country of focus, but it seems clear that the number of working parents is not independent of religion.
+%\item \textbf{Household income} -- The study \textit{``Religion and wealth: The role of religious affiliation and participation in early adult asset accumulation''} (Lisa A. Keister 2011) found clear links between religious affiliation and wealth, with adherents of Judaism and Episcopalianism attaining the most wealth, believers of Catholicism and mainline Protestants being in the middle, and conservative Protestants achieving the least wealth. The study also found that those who attend religious service achieved more wealth than those who do not. The same researcher states in another study \textit{``Conservative Protestants and Wealth: How Religion Perpetuates Asset Poverty''} (Lisa A. Keister 2008) that ``religion affects wealth indirectly through educational attainment, fertility, and female labour force participation'', but that there can also be direct causal links between religion and income. Direct effects can be explained as adherents to certain religious groups considering that ``money belongs to God'', being more prone to give away their money, and that they may seek to avoid accumulating wealth itself.\\This suggests that there are both indirect and direct causal links between religion and household income.
+%\item \textbf{Fish-eating habits} -- Vegetarian diets are common in Dharmic based faiths such as Buddhism, Hinduism, Jainism, Sikhism, and Taoism, due to the principle of \textit{Ahimsa}, i.e. ``do no harm''.\\
+%Since there are large religious groups where vegetarian diets are common due to the religion, there is a causal link between religion and fish-eating habits; however for Christianity, Judaism, Islam and Atheism, there is likely no significant causal links.
+%\item \textbf{Drinking habits} -- Alcohol is not specifically forbidden by the Qur'an, however there is a consensus within Islamic theologians that alcohol is prohibited by Islam as it weakens the conscience of the believer. Some Christian groups such as Baptists and Methodists believe in abstinence from alcohol. Initiated Sikhs cannot drink alcohol, as it is an intoxicant. For Buddhism, alcohol violates the 5th of the \textit{Five Precepts}; ``I undertake the training rule to abstain from fermented drink that causes headlessness''.\\https://en.wikipedia.org/wiki/Religion\_and\_alcohol\\As several large religions have rules prohibiting or discouraging the use of alcohol, there is a direct causal link between religion and drinking habits.
+%\end{itemize}
+%\item \textbf{Household income}
+%\begin{itemize}
+%\item \textbf{Fish- and fiber-eating habits} -- The study ``Does social class predict diet quality'' (Nicole Darmon and Adam Drewnowski 2008) concludes that higher-quality diets are in general consumed by better educated and more affluent people, and that conversely, lower quality diets tended to be consumed by groups with more limited economic means.\\From this we can establish a clear causal link between household income and food habits.
+%\end{itemize}
+%\end{itemize}
 
-\begin{itemize}
-\item \textbf{Working parents}
-\begin{itemize}
-\item \textbf{Household income}
-\end{itemize}
-\item \textbf{Religion}
-\begin{itemize}
-\item \textbf{Number of children} -- 
-\item \textbf{Working parents} -- The study \textit{``Religion, attitudes towards working mothers and wives' full-time employment''} (Guido Heineck 2004) performed with data from Austria, Germany, Italy, the UK, and the USA, found that the effect of religious affiliation leading to a lower likelihood of full-time working wives is weak, and that the attitudes of males' towards female employment has a much greater effect.\\Looking at numbers for Islam specifically, it can be seen that for countries such as Iran (98\% Muslim) or Iraq (97\% Muslim), the female labor force participation rate is 16\% and 14\% -- while Bangladesh (89\% Muslim) has a participation rate of 56\%.\\https://en.wikipedia.org/wiki/Female\_labor\_force\_in\_the\_Muslim\_world\\Given that religious affiliation lends to more traditional views, and that more traditional views lends to a more traditional family, there is likely to be some link between religion and number of working parents. The strength of this link will vary with the country of focus, but it seems clear that the number of working parents is not independent of religion.
-\item \textbf{Household income} -- The study \textit{``Religion and wealth: The role of religious affiliation and participation in early adult asset accumulation''} (Lisa A. Keister 2011) found clear links between religious affiliation and wealth, with adherents of Judaism and Episcopalianism attaining the most wealth, believers of Catholicism and mainline Protestants being in the middle, and conservative Protestants achieving the least wealth. The study also found that those who attend religious service achieved more wealth than those who do not. The same researcher states in another study \textit{``Conservative Protestants and Wealth: How Religion Perpetuates Asset Poverty''} (Lisa A. Keister 2008) that ``religion affects wealth indirectly through educational attainment, fertility, and female labour force participation'', but that there can also be direct causal links between religion and income. Direct effects can be explained as adherents to certain religious groups considering that ``money belongs to God'', being more prone to give away their money, and that they may seek to avoid accumulating wealth itself.\\This suggests that there are both indirect and direct causal links between religion and household income.
-\item \textbf{Fish-eating habits} -- Vegetarian diets are common in Dharmic based faiths such as Buddhism, Hinduism, Jainism, Sikhism, and Taoism, due to the principle of \textit{Ahimsa}, i.e. ``do no harm''.\\
-Since there are large religious groups where vegetarian diets are common due to the religion, there is a causal link between religion and fish-eating habits; however for Christianity, Judaism, Islam and Atheism, there is likely no significant causal links.
-\item \textbf{Drinking habits} -- Alcohol is not specifically forbidden by the Qur'an, however there is a consensus within Islamic theologians that alcohol is prohibited by Islam as it weakens the conscience of the believer. Some Christian groups such as Baptists and Methodists believe in abstinence from alcohol. Initiated Sikhs cannot drink alcohol, as it is an intoxicant. For Buddhism, alcohol violates the 5th of the \textit{Five Precepts}; ``I undertake the training rule to abstain from fermented drink that causes headlessness''.\\https://en.wikipedia.org/wiki/Religion\_and\_alcohol\\As several large religions have rules prohibiting or discouraging the use of alcohol, there is a direct causal link between religion and drinking habits.
-\end{itemize}
-\item \textbf{Household income}
-\begin{itemize}
-\item \textbf{Fish- and fiber-eating habits} -- The study ``Does social class predict diet quality'' (Nicole Darmon and Adam Drewnowski 2008) concludes that higher-quality diets are in general consumed by better educated and more affluent people, and that conversely, lower quality diets tended to be consumed by groups with more limited economic means.\\From this we can establish a clear causal link between household income and food habits.
-\end{itemize}
-\end{itemize}
+Figure~\ref{fig:p2_bayesian_network} shows a Bayesian network for the random variables
+\begin{inparaenum}[1)]
+\item \textit{Illness at the moment},
+\item \textit{History of illness},
+\item \textit{Number of children},
+\item \textit{Working parents},
+\item \textit{Religion},
+\item \textit{Household income},
+\item \textit{Fish-eating habits},
+\item \textit{Fiber-eating habits}, and
+\item \textit{Drinking habits}
+\end{inparaenum}.
 
-\begin{dot2tex}[dot, scale=0.5]
+Modelling the network based on causality leads to specifying fewer conditional probability values, as well as the values being easier to find since they are more intuitive.
+
+The conditional independence properties of the network is as follows:
+
+\begin{enumerate}
+\item \textit{Illness at the moment} is dependent on every other random variable because it depends on \textit{History of illness}, which depends on every other random variable.
+\item \textit{History of illness} directly depends on \textit{Number of children}, \textit{Fiber-eating habits}, \textit{Fish-eating habits], and \textit{Drinking Habits}. It is also indirectly dependent on every other variable, except \textit{Illness at the moment}.
+\end{enumerate}
+
+\begin{figure}
+\centering
+\begin{dot2tex}[dot, scale=0.6]
 digraph G {
+node [shape=ellipse];
+
 illness_current     [label="Illness at the moment"]
 illness_history     [label="History of illness"]
 number_of_children  [label="Number of children"]
@@ -188,40 +214,26 @@ fish_eating_habits  [label="Fish-eating habits"]
 fiber_eating_habits [label="Fiber-eating habits"]
 drinking_habits     [label="Drinking habits"]
 
-node [shape="circle"];
-
 illness_history     -> illness_current;
+number_of_children  -> illness_history;
 working_parents     -> household_income;
 religion            -> number_of_children;
 religion            -> working_parents;
 religion            -> household_income;
 religion            -> fish_eating_habits;
 religion            -> drinking_habits;
-fish_eating_habits  -> illness_history;
-fiber_eating_habits -> illness_history;
-drinking_habits     -> illness_history;
 household_income    -> drinking_habits;
 household_income    -> fish_eating_habits;
 household_income    -> fiber_eating_habits;
 household_income    -> number_of_children;
-
+fish_eating_habits  -> illness_history;
+fiber_eating_habits -> illness_history;
+drinking_habits     -> illness_history;
 }
 \end{dot2tex}
-
-% \begin{tikzpicture}[>=latex',scale=0.5] % set node style
-% \begin{dot2tex}[dot,tikz,codeonly,styleonly,options=-s -tmath]
-% digraph G {
-% node [style="n"];
-% p [label="+"];
-% t [texlbl="\LaTeX"];
-% 6 8 10-> p;
-% 6 -> t;
-% 8 -> t;
-% t -> p;
-% {rank=same; 10;6;8}
-% }
-% \end{dot2tex}
-% \end{tikzpicture}
+\label{fig:p2_bayesian_network}
+\caption{Bayesian network showing causal links between random variables.}
+\end{figure}
 
 \end{document}
 

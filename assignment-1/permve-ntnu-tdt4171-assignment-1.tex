@@ -12,9 +12,16 @@
 
 \date{\normalsize\today}
 
+\usepackage{nicefrac}
 \usepackage{dot2texi}
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows}
+
+\newacro{CPT}{Conditional Probability Table}
+
+\hyphenation{ContainsPrize}
+\hyphenation{MyChoice}
+\hyphenation{OpenedByOfficial}
 
 \begin{document}
 \maketitle
@@ -27,7 +34,7 @@
 
 \begin{enumerate}[label=\alph*)]
 \item \textit{How many atomic events are there in the joint probability distribution\\(i.e., how many 5-card hands are there)?}\\
-The number of 5-card hands in poker can be found with combinatorics by noting that the ordering of the cards do not matter:
+The number of 5-card hands in poker can be found with combinatorics by noting that the ordering of the cards does not matter:
 \begin{equation}
 \binom{52}{5} =
 \frac{52!}{5!(52 - 5)!} =
@@ -43,14 +50,14 @@ The probability of each atomic event, i.e. the probability of any distinct poker
 \item
 \begin{itemize}
 \item \textit{What is the probability of being dealt a royal straight flush?}\\
-A royal straight flush consists of five cards of the same suit in a sequence, where the top card is an ace. There exists four possible royal straight flush hands; one for each suit. The probability of being dealt a royal straight flush is:
+A royal straight flush consists of five cards of the same suit in a consecutive sequence, where the top card is an ace. There are four possible royal straight flush hands; one for each suit. The probability of being dealt a royal straight flush is:
 \begin{equation}
-\frac{4}{2598960} \approx 1.53908 \cdot 10^{-6}
+\frac{4}{2598960} = \frac{1}{649740} \approx 1.53908 \cdot 10^{-6}
 \end{equation}
 \item \textit{What is the probability of being dealt four of a kind?}\\
 Four of a kind is a poker hand where four of the cards have the same rank, and the fifth card can be any other rank and suit. The number of possible four of a kind hands is the number of ranks; 13, multiplied by the number of possible fifth cards; which is any of the twelve remaining ranks from one of four suits:
 \begin{equation}
-\frac{13 \cdot 12 \cdot 4}{2598960} \approx 0.00024
+\frac{13 \cdot 12 \cdot 4}{2598960} = \frac{1}{4165} \approx 2.40096 \cdot 10^{-4}
 \end{equation}
 \end{itemize}
 \end{enumerate}
@@ -79,11 +86,11 @@ The number of ways to draw two cards from a deck of 52 playing cards is given by
 \end{equation}
 The probability that drawing two cards from a deck of 52 playing cards yields a pair is given by the number of pairs in a deck, divided by the number of ways to draw two cards from a deck:
 \begin{equation}
-\frac{78}{1326} \approx 0.05882
+\frac{78}{1326} = \frac{1}{17} \approx 0.05882
 \end{equation}
 The solution can also be found by reasoning that the probability of the second card drawn will be of the same rank as the first card drawn is given by:
 \begin{equation}
-\frac{4 - 1}{52 - 1} = \frac{3}{51} \approx 0.05882
+\frac{4 - 1}{52 - 1} = \frac{3}{51} = \frac{1}{17} \approx 0.05882
 \end{equation}
 \item \textit{What is the conditional probability they constitute a pair given that they are of different suits?}\\
 The number of ways to draw two cards of different suits from a deck is given by the number of ways to draw two cards from a deck, minus the number of suits times the number of ways to draw two cards from the same suit:
@@ -96,11 +103,11 @@ The number of ways to draw two cards of different suits from a deck is given by 
 \end{equation}
 The number of possible pairs is given by equation~\ref{eq:number_of_pairs}. The number of ways to draw a suit from a deck, given that the cards drawn will be from different suits, is given by:
 \begin{equation}
-\frac{78}{1014} \approx 0.07692
+\frac{78}{1014} = \frac{1}{13} \approx 0.07692
 \end{equation}
 The solution can also be found by reasoning that the probability of the second card drawn will be the same rank as the first card drawn, given that the second card drawn will be from a different suit, is given by:
 \begin{equation}
-\frac{4 - 1}{52 - 13} = \frac{3}{39} \approx 0.07692
+\frac{4 - 1}{52 - 13} = \frac{3}{39} = \frac{1}{13} \approx 0.07692
 \end{equation}
 \end{enumerate}
 
@@ -148,9 +155,11 @@ Dividing both sides by $P(A)$:
 P(B \vert A) > P(B)
 \end{equation}
 
+\setlength\parindent{17pt}
 This derivation shows that if it is known that the probability of A given B is greater than the prior probability of A (equation~\ref{eq:a_given_b_more_likely_than_a}), it is also true that the probability of B given A is greater than the prior probability of B (equation~\ref{eq:b_given_a_more_likely_than_b}).
 
 Intuitively this makes sense, since knowledge that a cause is more probable given the presence of a symptom would also make the probability of the symptom more likely given the presence of the cause.
+\setlength\parindent{0pt}
 
 \section{Bayesian Network Construction}
 
@@ -188,9 +197,10 @@ drinking_habits     -> illness_history;
 }
 \end{dot2tex}
 \label{fig:p2_bayesian_network}
-\caption{Bayesian network showing causal links between random variables.}
+\caption{Bayesian network showing causal links between random variables in problem II.}
 \end{figure}
 
+\setlength\parindent{17pt}
 Figure~\ref{fig:p2_bayesian_network} shows a Bayesian network for the random variables
 \begin{inparaenum}[1)]
 \item \textit{Illness at the moment},
@@ -207,6 +217,7 @@ Figure~\ref{fig:p2_bayesian_network} shows a Bayesian network for the random var
 Modeling the network based on causality leads to specifying fewer conditional probability values, as well as the values being easier to find since they are more intuitive.
 
 The conditional independence properties of the network is as follows:
+\setlength\parindent{0pt}
 
 \begin{enumerate}
 \item \textit{Illness at the moment} is conditionally independent of all other random variables, given its parent \textit{History of illness}.
@@ -228,6 +239,89 @@ The conditional independence properties of the network is as follows:
 \item \textit{Drinking habits} is conditionally independent of \textit{Working parents} and \textit{Illness at the moment} -- given its parents \textit{Religion} and \textit{Household income}, its children \textit{History of illness}, and the parents of its child; \textit{Number of children}, \textit{Fiber-eating habits} and \textit{Fish-eating habits}.
 
 \end{enumerate}
+
+\newpage
+
+\section{Bayesian Network Application}
+
+\setlength\parindent{17pt}
+
+\begin{figure}
+\centering
+\begin{dot2tex}[dot, scale=0.6]
+digraph G {
+node [shape=ellipse];
+
+my_choice          [label="MyChoice (M)"]
+contains_prize     [label="ContainsPrize (C)"]
+opened_by_official [label="OpenedByOfficial (O)"]
+
+my_choice          -> opened_by_official;
+contains_prize     -> opened_by_official;
+}
+\end{dot2tex}
+\label{fig:p3_bayesian_network}
+\caption{Bayesian network modeling problem III.}
+\end{figure}
+
+\begin{sloppypar}
+The described scenario is shown modeled in Figure~2 as a Bayesian network with three random variables; \textit{ContainsPrize}~(C), \textit{MyChoice}~(M), and \textit{OpenedByOfficial}~(O). In the game, the action made by the official is a direct consequence of the player's chosen door and the prize door. This makes it intuitive to model the network with \textit{OpenedByOfficial} being caused by \textit{MyChoice} and \textit{ContainsPrize}.
+\end{sloppypar}
+
+\begin{table}
+\centering
+\begin{tabular}{ccccc}
+\toprule
+$C$ & $M$ & $P(O=a \vert C, M)$ & $P(O=b \vert C, M)$ & $P(O=c \vert C, M)$ \\
+\midrule
+a   & a   & 0                   & $\nicefrac{1}{2}$   & $\nicefrac{1}{2}$   \\
+a   & b   & 0                   & 0                   & 1                   \\
+a   & c   & 0                   & 1                   & 0                   \\
+b   & a   & 0                   & 0                   & 1                   \\
+b   & b   & $\nicefrac{1}{2}$   & 0                   & $\nicefrac{1}{2}$   \\
+b   & c   & 1                   & 0                   & 0                   \\
+c   & a   & 0                   & 1                   & 0                   \\
+c   & b   & 1                   & 0                   & 0                   \\
+c   & c   & $\nicefrac{1}{2}$   & $\nicefrac{1}{2}$   & 0                   \\
+\bottomrule
+\end{tabular}
+\label{table:p3_o_cpt}
+\caption{\acf{CPT} for $\textbf{P}(O \vert C, M)$.}
+\end{table}
+
+\begin{sloppypar}
+The prior probability of \textit{MyChoice} is $\textbf{P}(M) = \langle \nicefrac{1}{3}, \nicefrac{1}{3}, \nicefrac{1}{3} \rangle$, and the prior probability of \textit{ContainsPrize} is $\textbf{P}(C) = \langle \nicefrac{1}{3}, \nicefrac{1}{3}, \nicefrac{1}{3} \rangle$. Table~1 shows the \ac{CPT} for the random variable \textit{OpenedByOfficial}.
+\end{sloppypar}
+
+\begin{sloppypar}
+Shown in Equation~\ref{eq:p3_o_choose_b} is the scenario where the player chooses door~$a$ and the official chooses door~$b$. This results in $\textbf{P}(C \vert M=a \land O=b) = \langle \nicefrac{1}{3}, 0, \nicefrac{2}{3} \rangle$. Interpreting this result shows that there is a $\nicefrac{1}{3}$ chance that the originally chosen door is the prize door, that there is zero chance that the door chosen by the official is the prize door, and that there is a $\nicefrac{2}{3}$ chance that door~$c$ is the prize door.
+\end{sloppypar}
+
+\begin{equation}
+\begin{split}
+\textbf{P}(C \vert M=a \land O=b)
+&= \alpha \cdot \textbf{P}(C) \cdot \textbf{P}(M=a) \cdot \textbf{P}(O=b \vert M=a, C) \\
+&= \alpha \cdot \langle \frac{1}{3}, \frac{1}{3}, \frac{1}{3} \rangle \cdot \frac{1}{3} \cdot \langle \frac{1}{2}, 0, 1 \rangle \\
+&= \alpha \cdot \langle \frac{1}{18}, 0, \frac{1}{9} \rangle \\
+&= \langle \frac{1}{3}, 0, \frac{2}{3} \rangle
+\end{split}
+\label{eq:p3_o_choose_b}
+\end{equation}
+
+Equation~\ref{eq:p3_o_choose_c} shows the symmetric scenario where the player chooses door~$a$ and the official chooses door~$c$. This results in $\textbf{P}(C \vert M=a \land O=c) = \langle \nicefrac{1}{3}, \nicefrac{2}{3}, 0 \rangle$. Interpreting this result shows that there is a $\nicefrac{1}{3}$ chance that the originally chosen door is the prize door, that there is a $\nicefrac{2}{3}$ chance that door~$b$ is the prize door, and that there zero chance that the door chosen by the official is the prize door.
+
+\begin{equation}
+\begin{split}
+\textbf{P}(C \vert M=a \land O=c)
+&= \alpha \cdot \textbf{P}(C) \cdot P(M=a) \cdot \textbf{P}(O=c \vert M=a, C) \\
+&= \alpha \cdot \langle \frac{1}{3}, \frac{1}{3}, \frac{1}{3} \rangle \cdot \frac{1}{3} \cdot \langle \frac{1}{2}, 1, 0 \rangle \\
+&= \alpha \cdot \langle \frac{1}{18}, \frac{1}{9}, 0 \rangle \\
+&= \langle \frac{1}{3}, \frac{2}{3}, 0 \rangle
+\end{split}
+\label{eq:p3_o_choose_c}
+\end{equation}
+
+Based on Equation~\ref{eq:p3_o_choose_b} and Equation~\ref{eq:p3_o_choose_c} it can be concluded that given the knowledge of which door the player picked, and which door the official opened; there is a posterior probability of $\nicefrac{1}{3}$ that the door picked by the player is the prize door, and a posterior probability of $\nicefrac{2}{3}$ that the door picked by the player is not the prize door. This means that the best strategy for the player will always be to change doors after the official opens one door; since this will double his chances of winning the prize!
 
 \end{document}
 

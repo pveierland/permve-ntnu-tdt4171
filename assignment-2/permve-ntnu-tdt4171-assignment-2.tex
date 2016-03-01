@@ -1,0 +1,92 @@
+\input{permve-ntnu-latex-assignment.tex}
+
+\usepackage{float}
+
+\title{	
+\normalfont \normalsize 
+\textsc{Norwegian University of Science and Technology\\TDT4171 -- Artificial Intelligence Methods} \\ [25pt]
+\horrule{0.5pt} \\[0.4cm]
+\huge Assignment 2 \\
+\horrule{2pt} \\[0.5cm]
+}
+
+\author{Per Magnus Veierland\\permve@stud.ntnu.no}
+
+\date{\normalsize\today}
+
+\newacro{HMM}{Hidden Markov Model}\newacroindefinite{HMM}{an}{a}
+
+\begin{document}
+\maketitle
+
+\section*{Part A}
+
+\Iac{HMM} is defined as a ``temporal probabilistic model in which the state of a process is described by a \textit{single discrete} random variable''. The following equations defines the ``Umbrella domain'' as \iac{HMM}.
+
+\begin{itemize}
+\item The \textit{single, discrete} state variable $X_t$ for a given time slice is:
+\begin{equation}
+X_t = \mathit{Rain}_t \in \{ \mathit{true}, \mathit{false} \}
+\end{equation}
+
+\item The \textit{observable variable} $E_t$ for a given time slice is:
+\begin{equation}
+E_t = \mathit{Umbrella}_t \in \{ \mathit{true}, \mathit{false} \}
+\end{equation}
+
+\item The \textit{dynamic model} is:
+\begin{equation}
+\mathbf{P}(X_t \vert X_{t - 1}) =
+\begin{pmatrix}
+0.7 & 0.3 \\
+0.3 & 0.7 \\
+\end{pmatrix}
+\end{equation}
+
+\item The \textit{observation model} is:
+\begin{equation}
+\mathbf{P}(E_t \vert X_t) =
+\begin{cases}
+\begin{pmatrix}
+0.9 & 0   \\
+0   & 0.2 \\
+\end{pmatrix}, & U_t = \mathit{true} \\
+\begin{pmatrix}
+0.1 & 0   \\
+0   & 0.8 \\
+\end{pmatrix}, & U_t = \mathit{false}
+\end{cases}
+\end{equation}
+
+\item The following is assumed when defining the domain model:
+\begin{enumerate}
+\item To avoid the state variable at a point in time $t$ depending on the unbounded set of all previous state values, the \textbf{Markov assumption} is used; meaning it is assumed that the state at a specific point in time depends on only a \textit{finite fixed number} of previous states. Specifically, the domain is modeled as a \textbf{first-order Markov process}, meaning that a state only depends on the previous state. For the given domain, this means that the chance of rain on a given day depends only on whether it rained on the previous day. How reasonable this assumption is depends on how accurately it models an actual domain environment compared to the needs of the model users.
+\item To apply the \textbf{Markov assumption} to an unbounded set of states, it is further assumed that the domain can be modeled as a \textbf{stationary process}, i.e. that the conditional distribution for a state given its predecessor state is the same for all states. This is a reasonable assumption, as the simplicity and applicability of a \textbf{Markov process} would be removed by the need to specify a separate conditional probability table for every single state when there is an unbounded set of states.
+\item Another assumption made is the \textbf{sensor Markov assumption}, which states that the current evidence variable depends only on the current state variable, and not on previous state variables or previous evidence variables. This is a reasonable assumption for the domain, as the chance of observing an umbrella is likely to correlate highly with whether it is currently raining.
+\end{enumerate}
+\end{itemize}
+
+\section*{Part B}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccc}
+\toprule
+Day ($t$) & Umbrella ($E_t$) & $\mathbf{P}(X_t \vert e_{1:t}) = \mathbf{f}_{1:t}$ \\
+\midrule
+0 & \textit{-} & $\langle 0.500, 0.500 \rangle$ \\
+1 & \textit{true} & $\langle 0.818, 0.182 \rangle$ \\
+2 & \textit{true} & $\langle 0.883, 0.117 \rangle$ \\
+3 & \textit{false} & $\langle 0.191, 0.809 \rangle$ \\
+4 & \textit{true} & $\langle 0.731, 0.269 \rangle$ \\
+5 & \textit{true} & $\langle 0.867, 0.133 \rangle$ \\
+\bottomrule
+\end{tabular}
+\caption{Estimated probability distribution for the process state variable (day~1-5).}
+\label{table:first}
+\end{table}
+
+The probability of rain at day~5 given the observations listed in Table~\ref{table:first} is approximately 86.7\%.
+
+\end{document}
+

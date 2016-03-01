@@ -66,13 +66,15 @@ E_t = \mathit{Umbrella}_t \in \{ \mathit{true}, \mathit{false} \}
 \end{enumerate}
 \end{itemize}
 
+\newpage
+
 \section*{Part B}
 
 \begin{table}[H]
 \centering
 \begin{tabular}{ccc}
 \toprule
-Day ($t$) & Umbrella ($E_t$) & $\mathbf{P}(X_t \vert e_{1:t}) = \mathbf{f}_{1:t}$ \\
+Day ($t$) & Umbrella ($e_t$) & $\mathbf{P}(X_t \vert e_{1:t}) = \mathbf{f}_{1:t}$ \\
 \midrule
 0 & \textit{-} & $\langle 0.500, 0.500 \rangle$ \\
 1 & \textit{true} & $\langle 0.818, 0.182 \rangle$ \\
@@ -87,6 +89,32 @@ Day ($t$) & Umbrella ($E_t$) & $\mathbf{P}(X_t \vert e_{1:t}) = \mathbf{f}_{1:t}
 \end{table}
 
 The probability of rain at day~5 given the observations listed in Table~\ref{table:first} is approximately 86.7\%.
+
+\section*{Part C}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccccc}
+\toprule
+Day ($t$) &
+Umbrella ($e_t$) &
+$\mathbf{P}(X_t \vert \mathbf{e}_{1:t}) = \mathbf{f}_{1:t}$ &
+$\mathbf{P}(\mathbf{e}_{t + 1:5} \vert X_t) = \mathbf{b}_{t + 1:5}$ &
+$\mathbf{P}(X_t \vert \mathbf{e}_{1:5})$ \\
+\midrule
+0 & \textit{-}& $\langle 0.500, 0.500 \rangle$& $\langle 0.044, 0.024 \rangle$& $\langle 0.647, 0.353 \rangle$ \\
+1 & \textit{true}& $\langle 0.818, 0.182 \rangle$& $\langle 0.066, 0.046 \rangle$& $\langle 0.867, 0.133 \rangle$ \\
+2 & \textit{true}& $\langle 0.883, 0.117 \rangle$& $\langle 0.091, 0.150 \rangle$& $\langle 0.820, 0.180 \rangle$ \\
+3 & \textit{false}& $\langle 0.191, 0.809 \rangle$& $\langle 0.459, 0.244 \rangle$& $\langle 0.307, 0.693 \rangle$ \\
+4 & \textit{true}& $\langle 0.731, 0.269 \rangle$& $\langle 0.690, 0.410 \rangle$& $\langle 0.820, 0.180 \rangle$ \\
+5 & \textit{true}& $\langle 0.867, 0.133 \rangle$& $\langle 1.000, 1.000 \rangle$& $\langle 0.867, 0.133 \rangle$ \\
+\bottomrule
+\end{tabular}
+\caption{Smoothed estimate of probability distribution for the process state variable (day~1-5).}
+\label{table:second}
+\end{table}
+
+The probability of rain at day~1 given the observations listed in Table~\ref{table:second} is approximately 86.7\%.
 
 \end{document}
 

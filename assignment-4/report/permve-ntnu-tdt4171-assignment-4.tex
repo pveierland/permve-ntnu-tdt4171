@@ -1,0 +1,226 @@
+\input{permve-ntnu-latex-assignment.tex}
+
+\title{	
+\normalfont \normalsize 
+\textsc{Norwegian University of Science and Technology\\TDT4171 -- Artificial Intelligence Methods} \\ [25pt]
+\horrule{0.5pt} \\[0.4cm]
+\huge Assignment 4 \\
+\horrule{2pt} \\[0.5cm]
+}
+
+\author{Per Magnus Veierland\\permve@stud.ntnu.no}
+
+\date{\normalsize\today}
+
+\usepackage{float}
+\usepackage{nicefrac}
+\usepackage{dot2texi}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+
+\begin{document}
+\maketitle
+
+\section{Random Attribute Selection}
+
+\begin{figure}[H]
+\centering
+\begin{dot2tex}[dot, scale=0.4]
+digraph G {
+
+overlap=scale;
+splines=true;
+
+node [
+    shape=box,
+    fixedsize=true
+];
+
+N0 [label="Attribute #7"];
+N1 [label="Attribute #1"];
+N2 [label="1"];
+N1 -> N2 [label="1"];
+N3 [label="Attribute #2"];
+N4 [label="Attribute #3"];
+N5 [label="1"];
+N4 -> N5 [label="1"];
+N6 [label="2"];
+N4 -> N6 [label="2"];
+N3 -> N4 [label="1"];
+N7 [label="Attribute #3"];
+N8 [label="2"];
+N7 -> N8 [label="1"];
+N9 [label="1"];
+N7 -> N9 [label="2"];
+N3 -> N7 [label="2"];
+N1 -> N3 [label="2"];
+N0 -> N1 [label="1"];
+N10 [label="Attribute #1"];
+N11 [label="1"];
+N10 -> N11 [label="1"];
+N12 [label="Attribute #5"];
+N13 [label="Attribute #3"];
+N14 [label="Attribute #2"];
+N15 [label="1"];
+N14 -> N15 [label="1"];
+N16 [label="2"];
+N14 -> N16 [label="2"];
+N13 -> N14 [label="1"];
+N17 [label="Attribute #2"];
+N18 [label="2"];
+N17 -> N18 [label="1"];
+N19 [label="1"];
+N17 -> N19 [label="2"];
+N13 -> N17 [label="2"];
+N12 -> N13 [label="1"];
+N20 [label="Attribute #6"];
+N21 [label="Attribute #3"];
+N22 [label="Attribute #2"];
+N23 [label="1"];
+N22 -> N23 [label="1"];
+N24 [label="2"];
+N22 -> N24 [label="2"];
+N21 -> N22 [label="1"];
+N25 [label="Attribute #2"];
+N26 [label="2"];
+N25 -> N26 [label="1"];
+N27 [label="1"];
+N25 -> N27 [label="2"];
+N21 -> N25 [label="2"];
+N20 -> N21 [label="1"];
+N28 [label="Attribute #4"];
+N29 [label="Attribute #2"];
+N30 [label="Attribute #3"];
+N31 [label="1"];
+N30 -> N31 [label="1"];
+N32 [label="2"];
+N30 -> N32 [label="2"];
+N29 -> N30 [label="1"];
+N33 [label="2"];
+N29 -> N33 [label="2"];
+N28 -> N29 [label="1"];
+N34 [label="2"];
+N28 -> N34 [label="2"];
+N20 -> N28 [label="2"];
+N12 -> N20 [label="2"];
+N10 -> N12 [label="2"];
+N0 -> N10 [label="2"];
+}
+\end{dot2tex}
+\label{fig:tree_random_attribute_selection}
+\caption{Decision tree based on random attribute selection.}
+\end{figure}
+
+\setlength\parindent{17pt}
+
+Figure~\ref{fig:tree_random_attribute_selection} shows a decision tree created from the \texttt{training.txt} examples using uniform random numbers in the range $[0.0,1.0)$ as the \textsc{Importance} function with the \textsc{Decision-Tree-Learning} algorithm.
+
+When evaluated using the examples from \texttt{test.txt}, the decision tree created with random attribute selection correctly classified $\nicefrac{25}{28}$ examples ($89.29$\% accuracy).
+
+\section{Information Gain Based Attribute Selection}
+
+\begin{figure}[H]
+\centering
+\begin{dot2tex}[dot, scale=0.4]
+digraph G {
+
+overlap=scale;
+splines=true;
+
+node [
+    shape=box,
+    fixedsize=true
+];
+
+N0 [label="Attribute #1"];
+N1 [label="Attribute #5"];
+N2 [label="Attribute #6"];
+N3 [label="Attribute #4"];
+N4 [label="Attribute #2"];
+N5 [label="Attribute #3"];
+N6 [label="1"];
+N5 -> N6 [label="2"];
+N7 [label="2"];
+N5 -> N7 [label="1"];
+N4 -> N5 [label="2"];
+N8 [label="2"];
+N4 -> N8 [label="1"];
+N3 -> N4 [label="2"];
+N9 [label="Attribute #2"];
+N10 [label="Attribute #3"];
+N11 [label="1"];
+N10 -> N11 [label="2"];
+N12 [label="2"];
+N10 -> N12 [label="1"];
+N9 -> N10 [label="2"];
+N13 [label="Attribute #3"];
+N14 [label="2"];
+N13 -> N14 [label="2"];
+N15 [label="1"];
+N13 -> N15 [label="1"];
+N9 -> N13 [label="1"];
+N3 -> N9 [label="1"];
+N2 -> N3 [label="2"];
+N16 [label="Attribute #2"];
+N17 [label="Attribute #3"];
+N18 [label="1"];
+N17 -> N18 [label="2"];
+N19 [label="2"];
+N17 -> N19 [label="1"];
+N16 -> N17 [label="2"];
+N20 [label="Attribute #3"];
+N21 [label="2"];
+N20 -> N21 [label="2"];
+N22 [label="1"];
+N20 -> N22 [label="1"];
+N16 -> N20 [label="1"];
+N2 -> N16 [label="1"];
+N1 -> N2 [label="2"];
+N23 [label="Attribute #3"];
+N24 [label="Attribute #2"];
+N25 [label="1"];
+N24 -> N25 [label="2"];
+N26 [label="2"];
+N24 -> N26 [label="1"];
+N23 -> N24 [label="2"];
+N27 [label="Attribute #2"];
+N28 [label="2"];
+N27 -> N28 [label="2"];
+N29 [label="1"];
+N27 -> N29 [label="1"];
+N23 -> N27 [label="1"];
+N1 -> N23 [label="1"];
+N0 -> N1 [label="2"];
+N30 [label="1"];
+N0 -> N30 [label="1"];
+}
+\end{dot2tex}
+\label{fig:tree_information_gain_attribute_selection}
+\caption{Decision tree based on information gain attribute selection.}
+\end{figure}
+
+Figure~\ref{fig:tree_information_gain_attribute_selection} shows a decision tree created from the \texttt{training.txt} examples using an information gain based \textsc{Importance} function with the \textsc{Decision-Tree-Learning} algorithm.
+
+When evaluated using the examples from \texttt{test.txt}, the decision tree created with information gain based attribute selection correctly classified $\nicefrac{26}{28}$ examples ($92.86$\% accuracy).
+
+\section{Findings}
+
+When using information gain based attribute selection, it is not possible to achieve 100\% classification accuracy with the given training and test data. To verify that the data is consistent, a decision tree was trained with both the training and test data. This tree was constructed without the \textsc{Plurality-Value} function being invoked, and was able to correctly classify all training- and test data examples. This confirms that the training- and test data is consistent.
+
+With random attribute selection, some trained decision trees were able to correctly classify all test examples. This suggests that there are enough examples in the training data to correctly classify all test examples, but that whether this can be achieved using decision trees depends on the order of attribute comparison. Improving the stability of the average accuracy of the trained decision trees requires more training data.
+
+Using random attribute selection can be better than information gain based attribute selection for the following reasons:
+
+\begin{enumerate}
+\item In the case of few training examples, random attribute selection can result in a decision tree which achieves a better test accuracy due to a more beneficial attribute selection order.
+\item As the \textsc{Decision-Tree-Learning} algorithm is based on greedy search, random attribute selection can result in more optimal decision trees than trees found with information gain based attribute selection.
+\end{enumerate}
+
+However in the average case, the information gain based approach is likely to be better, as in the case of few training examples the resulting model is not likely to be good, even though selecting attributes at random may be able to correctly classify all test examples, and in the case where there is enough training data, selecting attributes based on information gain should result in smaller decision trees which can be evaluated faster, as their distance from root to answer in the average case will be shorter than in decision trees based on random attribute selection.
+
+Running the \textsc{Decision-Tree-Learning} algorithm multiple times with random attribute selection, the test classification results ranged from \nicefrac{19}{28} (67.86\%) to \nicefrac{28}{28} (100\%). The reason for the varying results is that the attribute selection order is random, and depending on the attribute evaluation order the training data will either be lacking or sufficient to correctly classify the test examples.
+
+Running the \textsc{Decision-Tree-Learning} algorithm multiple times with information gain based attribute selection, the test classification results ranged from \nicefrac{19}{28} (67.86\%) to \nicefrac{26}{28} (92.86\%). The reason for the varying results is that there are several scenarios where multiple attributes yields the same information gain, which results in one of the tied attributes being selected randomly.
+
+\end{document}
+

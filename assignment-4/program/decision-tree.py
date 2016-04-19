@@ -198,9 +198,11 @@ test_examples = []
 if arguments.test_file:
     read_file(arguments.test_file, attributes, test_examples)
 
+    if arguments.all:
+        training_examples = training_examples + test_examples
+
 if arguments.all:
-    training_examples = training_examples + test_examples
-    test_examples     = test_examples + training_examples
+    test_examples = test_examples + training_examples
 
 attribute_evaluator = random_attribute_evaluator if arguments.random else entropic_attribute_evaluator
 

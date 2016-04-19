@@ -1,0 +1,65 @@
+digraph G {
+
+graph [fontname = "Open Sans" fontcolor="#444444"]
+node  [fontname = "Open Sans" fontcolor="#444444"]
+edge  [fontname = "Open Sans" fontcolor="#444444"]
+
+overlap=scale;
+splines=true;
+
+graph [
+    nodesep="0.4",
+    ranksep="0.4"
+];
+
+edge [
+    color="#444444"
+];
+
+node [
+    shape=box style=filled color="#444444" fillcolor="#6BB2B2"
+];
+
+nodetimeofday [label="Time of Day"]
+nodeweekend [label="Weekend"]
+nodestore [label="Store"]
+nodeitem [label="Item"]
+nodehunger [label="Hunger"]
+
+node [
+    shape=ellipse style=filled color="#444444" fillcolor="#F99157"
+];
+
+nodecrowd [label="Crowd"]
+nodeopen [label="Open"]
+nodeavailable [label="Available"]
+nodediscount [label="Discount"]
+
+node [
+    shape=hexagon style=filled color="#444444" fillcolor="#99C794"
+];
+
+nodepreparation [label="Preparation"]
+nodecost [label="Cost"]
+nodespeed [label="Speed of Service"]
+nodedistance [label="Distance"]
+nodesatisfaction [label="Satisfaction"]
+nodetimeused [label="Time Used"]
+nodeutility [label="Utility"]
+
+nodetimeofday -> nodecrowd, nodeopen;
+nodeweekend -> nodecrowd, nodeopen;
+nodestore -> nodecrowd, nodespeed, nodepreparation, nodedistance, nodeopen, nodeavailable, nodecost, nodediscount;
+nodeitem -> nodepreparation, nodeavailable, nodecost, nodediscount;
+nodecrowd -> nodespeed;
+nodepreparation -> nodetimeused;
+nodeopen -> nodesatisfaction;
+nodeavailable -> nodesatisfaction;
+nodediscount -> nodecost;
+nodecost -> nodeutility;
+nodespeed -> nodetimeused;
+nodedistance -> nodetimeused;
+nodesatisfaction -> nodeutility;
+nodehunger -> nodeutility;
+nodetimeused -> nodeutility;
+}

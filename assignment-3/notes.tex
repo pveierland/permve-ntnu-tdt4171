@@ -1,0 +1,121 @@
+Potential input: Current location which will affect distances
+
+Describe problem, inputs, outputs (outcome of lotery = atomic state or other lottery)
+
+Decide stores / food types
+
+Quantifying distance / cost etc 
+
+Conditional Probability Tables
+
+Utility schemes (an agent in a deterministic evntironment just needs a preference ranking on states, numbers dont matter)
+
+Describe nodes and links + conditional dependencies
+
+Combining utility values (normalize utility: a lot of time, no food and expensive vs no time, free and exactly the food we want)
+
+Preference elicitation (continuity, substitutability and monotonicity for preference specification)
+
+Individuelle forskjeller
+
+Test av modell med spørsmål
+
+
+Using these four inputs, we model the following
+\begin{enumerate*}[label=\alph*)]
+\item the probability that a store will be crowded given the time of shopping (unknown when selecting store),
+\item the probability of each store being open or closed given the time of shopping (partially unknown when selecting store),
+\item the distance to each store (known),
+\item the amount of preparation needed for the desired meal (cooking at home will take more time than eating out; known),
+\item the probability that each store will have the desired meal available (unknown),
+\item the probability that each store will have a discount for the desired meal (unknown),
+\item the estimated speed of service for each store (unknown),
+\item the total time estimated to visit each store (unknown),
+\item the total cost estimated for shopping at each store (unknown),
+\end{enumerate*}
+
+
+
+Decision support systems are needed because while it is possible to specify the available decision options and relevant factors, in reality the factors are probabilistic and change as new information is available. Tracking the updated information, such as the current discount information or parking space fill rate, can either be too extensive or tedious, and is often probabilistic,
+
+Decision analysis rests on an empirically verified assumption that while it is relatively easy for humans to specify elements of decisions, such as available decision options, relevant factors, and payoffs, it is much harder to combine these elements into an optimal decision. This assumption suggests strongly that decisions be modeled. 
+
+As stated in the book humans often make irrational choices, such as choosing which store to buy from given their internal utility function. \\
+We attempt to assist humans in this task by distilling their internal utility function for buying, which includes cost, time and satisfaction. And then using this utility function to suggest store choices that maximise the expected utility.
+
+
+
+on a week by week, and sometimes even on a single-day basis. Keeping track of the discounts available for multiple stores would easily become a tedious and time-consuming activity if one were to attempt to utilize all the available information, especially when taking into account the number of different items to purchase, the value of time, and the distance and cost of travelling between stores and your home.
+
+
+
+ This assumption suggests strongly that decisions be modeled.''
+ 
+ This problem has one decision with four different store alternatives modelled. The inputs for evaluating which store to visit when shopping groceries is described by
+\begin{enumerate*}[label=\alph*)]
+\item the desired meal to be purchased
+\item how hungry the user is
+\item if it is a weekday or weekend
+\item the time of the day.
+\end{enumerate*}
+
+
+
+
+Notes:
+
+A decision network, also known as an influence diagram, extends Bayesian networks by incorporating actions and utilities.
+
+The agent's preferences are captures by a utility function, U(s), which assigns a single number to express the desirability of a state.
+
+The expected utility of an action given the evidence, $EU(a\vert{}e)$, is just the average utility value of the outcomes, weighted by the probability that the outcome occurs.
+
+The principle of maximum expected utility (MEU) says that a rational agent should choose the action that maximizes the agent's expected utility.
+
+The axioms of utility theory are axioms about preference -- they say nothing about a utility function.
+
+As the outcome of a non-deterministic action is a lottery, it follows that an agent can only by choosing an action that maximizes the expected utility.
+
+Only a preference ranking of states is needed, the actual numbers don't matter. This is called a value function or ordinal utility function.
+
+If we want to build a decision-theoretic system that helps the agent make decisions or acts on his or her behalf, we must first work out what the agent's utility function is.
+
+This process, often called preference elicitation, involves presenting choices to the agent and using the observed preferences to pin down the underlying utility function.
+
+A utility scale can be established by fixing the best possible prize at $U(S) = u_{\top}$ and the worst possible catastrophe at $U(S) = u_{\bot}$. Normalized utilities uses a scale with $u_{\bot} = 0$ and $u_{\top} = 1$.
+
+Given a utility scale between $u_{\top}$ and $u_{\bot}$, we can assess the utility of any particular prize S by asking the agent to choose between S and a standard lottery $[p, u_{\top}; (1-p), u_{\bot}]$.
+
+The probability p is adjusted until the agent is indifferent between S and the standard lottery. Assuming normalized utilities, the utility of S is given by p. Once this is done for each prize, the utilities for all lotteries involving those prizes are determined.
+
+The utility of money was found by Grayson to be almost exactly proportional to the logarithm of the amount.
+
+The concept of risk-aversion can be discussed, as there may be scenarios where the knowledge of stores being open at a certain time is uncertain. In the case where one store, i.e. "7-11", is known to be open, compared to another store which only has a 50\% chance of being open, it may be rational to seek the more expensive store as it is guaranteed to be open.
+
+Decision theory is a normative theory; describing how a rational agent should act. A descriptive theory describes how actual agents act.
+
+The evidence suggests that humans are predictably irrational, see Allais paradox. Must factor in certainty effect and regret.
+
+If a set of attributes can be shown to exhibit mutual preferential independence, then the agent's preference behavior can be described as maximizing the function which is the sum of each attributes' value function.
+
+Easier to model causal relationships.
+
+To evaluate the system, we need a set of correct (input, output) pairs; a so-called ``gold standard'' to compare against.
+
+Performing sensitivity analysis of the system is important to improve the confidence that the system is correctly calibrated, and that the numerical probabilities chosen are a good fit.
+
+TODO remember to discuss conditional independence
+
+
+
+Bunnpris Elgeseter:\\
+Monday - Friday	08 - 23\\
+Saturday 09 - 21\\
+Sunday  closed\\
+
+Rema 1000 Elgeseter:\\
+Monday - Saturday: 07:00–23:00\\
+Sunday closed\\
+
+Shell Elgeseter:\\
+Open 24/7

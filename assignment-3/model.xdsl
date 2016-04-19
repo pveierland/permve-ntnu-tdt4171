@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<smile version="1.0" id="Network1" numsamples="1000" discsamples="10000">
+	<nodes>
+		<decision id="time_of_day">
+			<state id="t_12_15" />
+			<state id="t_15_18" />
+			<state id="t_18_21" />
+			<state id="t_21_24" />
+		</decision>
+		<decision id="item">
+			<state id="burger" />
+			<state id="eggs_n_bacon" />
+			<state id="coca_cola" />
+			<state id="taco" />
+		</decision>
+		<decision id="day">
+			<state id="weekday" />
+			<state id="weekend" />
+		</decision>
+		<decision id="hunger">
+			<state id="very" />
+			<state id="some" />
+			<state id="none" />
+		</decision>
+		<decision id="store">
+			<state id="rema_1000" />
+			<state id="bunnpris" />
+			<state id="shell" />
+			<state id="sesam" />
+		</decision>
+		<utility id="distance">
+			<parents>store</parents>
+			<utilities>507 267 334 667</utilities>
+		</utility>
+		<cpt id="open">
+			<state id="open" />
+			<state id="closed" />
+			<parents>store day time_of_day</parents>
+			<probabilities>0.98 0.02 0.98 0.02 0.98 0.02 0.633 0.367 0.49 0.51 0.49 0.51 0.49 0.51 0.316 0.6840000000000001 0.98 0.02 0.98 0.02 0.98 0.02 0.5 0.5 0.49 0.51 0.49 0.51 0.49 0.51 0 1 0.98 0.02 0.98 0.02 0.98 0.02 0.98 0.02 0.98 0.02 0.98 0.02 0.98 0.02 0.98 0.02 0 1 0.98 0.02 0.98 0.02 0.849 0.151 0 1 0.98 0.02 0.98 0.02 0.898 0.102</probabilities>
+		</cpt>
+		<cpt id="Crowd">
+			<state id="none" />
+			<state id="some" />
+			<state id="very" />
+			<parents>day time_of_day store</parents>
+			<probabilities>0.1 0.6 0.3 0.1 0.6 0.3 0.5 0.3 0.2 1 0 0 0.1 0.5 0.4 0.1 0.5 0.4 0.5 0.3 0.2 0.8 0.2 0 0.4 0.4 0.2 0.4 0.4 0.2 0.7 0.2 0.1 0.7 0.2 0.1 0.8 0.2 0 0.8 0.2 0 0.8 0.1 0.1 0.1 0.7 0.2 0.1 0.5 0.4 0.1 0.5 0.4 0.5 0.3 0.2 1 0 0 0.1 0.5 0.4 0.1 0.5 0.4 0.5 0.3 0.2 0.7 0.2 0.1 0.3 0.5 0.2 0.3 0.5 0.2 0.5 0.3 0.2 0.6 0.3 0.1 0.5 0.4 0.1 0.5 0.4 0.1 0.6 0.2 0.2 0.1 0.6 0.3</probabilities>
+		</cpt>
+		<cpt id="Available">
+			<state id="available" />
+			<state id="unavailable" />
+			<parents>store item</parents>
+			<probabilities>0.85 0.15 0.95 0.05 0.95 0.05 0.8 0.2 0.9 0.1 0.95 0.05 0.97 0.03 0.85 0.15 0.9 0.1 0 1 0.95 0.05 0 1 0.95 0.05 0 1 0.8 0.2 0 1</probabilities>
+		</cpt>
+		<cpt id="discount">
+			<state id="discounted" />
+			<state id="not_discounted" />
+			<parents>item store</parents>
+			<probabilities>0.1 0.9 0.1 0.9 0.15 0.85 0 1 0.1 0.9 0.1 0.9 0 1 0 1 0.05 0.95 0.05 0.95 0.1 0.9 0 1 0.2 0.8 0.2 0.8 0 1 0 1</probabilities>
+		</cpt>
+		<utility id="cost">
+			<parents>store item discount</parents>
+			<utilities>25 50 20 40 10 20 22.5 45 30 60 22.5 45 10 20 25 50 57.5 115 0 0 14 28 0 0 47.5 95 0 0 12.5 25 0 0</utilities>
+		</utility>
+		<utility id="satisfaction">
+			<parents>open Available</parents>
+			<utilities>1 0 0 0</utilities>
+		</utility>
+		<utility id="speed_of_service">
+			<parents>Crowd store</parents>
+			<utilities>360 300 120 120 720 600 300 300 1080 900 900 1200</utilities>
+		</utility>
+		<utility id="Preparation">
+			<parents>store item</parents>
+			<utilities>1800 900 0 2400 1800 900 0 2400 480 0 0 0 300 0 0 0</utilities>
+		</utility>
+		<mau id="Time_Used">
+			<parents>speed_of_service distance Preparation</parents>
+			<weights>1 1 1</weights>
+		</mau>
+		<utility id="h_val">
+			<parents>hunger</parents>
+			<utilities>0.8 0.5 0.2</utilities>
+		</utility>
+		<maux id="Utility">
+			<parents>Time_Used cost h_val satisfaction</parents>
+			<expression>satisfaction^(1/(0.8+h_val))*(1/((1-h_val)*cost+h_val*150*Time_Used/3600))</expression>
+		</maux>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 2.0.5590.0" name="Network1" faultnameformat="nodestate">
+			<node id="item">
+				<name>Item</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>760 200 813 224</position>
+			</node>
+			<node id="time_of_day">
+				<name>Time of Day</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>340 200 428 224</position>
+			</node>
+			<node id="day">
+				<name>Day</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>500 200 548 224</position>
+			</node>
+			<node id="hunger">
+				<name>Hunger</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>200 203 268 227</position>
+			</node>
+			<node id="distance">
+				<name>Distance</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>480 260 552 284</position>
+			</node>
+			<node id="store">
+				<name>Store</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>620 200 672 224</position>
+			</node>
+			<node id="open">
+				<name>Open</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>400 260 453 284</position>
+			</node>
+			<node id="Crowd">
+				<name>Crowd</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>320 260 376 284</position>
+			</node>
+			<node id="Available">
+				<name>Available</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>638 260 704 284</position>
+			</node>
+			<node id="discount">
+				<name>Discount</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>720 260 788 284</position>
+			</node>
+			<node id="cost">
+				<name>Cost</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>720 360 772 384</position>
+			</node>
+			<node id="speed_of_service">
+				<name>Speed of Service</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>380 360 491 384</position>
+			</node>
+			<node id="satisfaction">
+				<name>Satisfaction</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>620 360 696 384</position>
+			</node>
+			<node id="Utility">
+				<name>Utility</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>520 500 606 532</position>
+			</node>
+			<node id="Time_Used">
+				<name>Time Used</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>520 360 593 384</position>
+			</node>
+			<node id="Preparation">
+				<name>Preparation</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>560 260 634 284</position>
+			</node>
+			<node id="h_val">
+				<name>H_Val</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>286 344 337 376</position>
+			</node>
+			<arcformat parent="store" child="distance" width="1" color="000080" />
+			<arcformat parent="store" child="open" width="1" color="000080" />
+			<arcformat parent="day" child="open" width="1" color="000080" />
+			<arcformat parent="time_of_day" child="open" width="1" color="000080" />
+			<arcformat parent="day" child="Crowd" width="1" color="000080" />
+			<arcformat parent="time_of_day" child="Crowd" width="1" color="000080" />
+			<arcformat parent="store" child="Crowd" width="1" color="000080" />
+			<arcformat parent="store" child="Available" width="1" color="000080" />
+			<arcformat parent="item" child="Available" width="1" color="000080" />
+			<arcformat parent="item" child="discount" width="1" color="000080" />
+			<arcformat parent="store" child="discount" width="1" color="000080" />
+			<arcformat parent="store" child="cost" width="1" color="000080" />
+			<arcformat parent="item" child="cost" width="1" color="000080" />
+			<arcformat parent="discount" child="cost" width="1" color="000080" />
+			<arcformat parent="open" child="satisfaction" width="1" color="a0a0a0" />
+			<arcformat parent="Available" child="satisfaction" width="1" color="a0a0a0" />
+			<arcformat parent="Crowd" child="speed_of_service" width="1" color="000080" />
+			<arcformat parent="store" child="speed_of_service" width="1" color="000080" />
+			<arcformat parent="store" child="Preparation" width="1" color="000080" />
+			<arcformat parent="item" child="Preparation" width="1" color="000080" />
+			<arcformat parent="speed_of_service" child="Time_Used" width="1" color="000080" />
+			<arcformat parent="distance" child="Time_Used" width="1" color="000080" />
+			<arcformat parent="Preparation" child="Time_Used" width="1" color="000080" />
+			<arcformat parent="Time_Used" child="Utility" width="1" color="000080" />
+			<arcformat parent="cost" child="Utility" width="1" color="000080" />
+			<arcformat parent="satisfaction" child="Utility" width="1" color="000080" />
+		</genie>
+	</extensions>
+</smile>

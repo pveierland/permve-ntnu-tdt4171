@@ -1,0 +1,157 @@
+\input{permve-ntnu-latex-assignment.tex}
+
+\usepackage{pgfplotstable}
+\usepgfplotslibrary{fillbetween}
+
+\pgfplotsset{compat=1.5}
+
+\pgfplotsset{
+every axis/.append style={
+scale only axis,
+width=0.40\textwidth,height=0.3\textwidth,
+},
+/tikz/every picture/.append style={
+trim axis left,
+trim axis right,
+baseline
+}
+}
+
+% http://tex.stackexchange.com/questions/67895/is-there-an-easy-way-of-using-line-thickness-as-error-indicator-in-a-plot
+
+% Takes six arguments: data table name, x column, y column, error column,
+% color and error bar opacity.
+% ---
+% Creates invisible plots for the upper and lower boundaries of the error,
+% and names them. Then uses fill between to fill between the named upper and
+% lower error boundaries. All these plots are forgotten so that they are not
+% included in the legend. Finally, plots the y column above the error band.
+\newcommand{\errorband}[6]{
+\pgfplotstableread{#1}\datatable
+  \addplot [name path=pluserror,draw=none,no markers,forget plot]
+    table [x={#2},y expr=\thisrow{#3}+\thisrow{#4}] {\datatable};
+
+  \addplot [name path=minuserror,draw=none,no markers,forget plot]
+    table [x={#2},y expr=\thisrow{#3}-\thisrow{#4}] {\datatable};
+
+  \addplot [forget plot,fill=#5,opacity=#6]
+    fill between[on layer={},of=pluserror and minuserror];
+
+%  \addplot [#5,thick,no markers]
+%    table [x={#2},y={#3}] {\datatable};
+}
+
+\title{
+\normalfont \normalsize
+\textsc{Norwegian University of Science and Technology\\TDT4171 -- Artificial Intelligence Methods} \\ [25pt]
+\horrule{0.5pt} \\[0.4cm]
+\huge Assignment 5 \\
+\horrule{2pt} \\[0.5cm]
+}
+
+\author{Per Magnus Veierland\\permve@stud.ntnu.no}
+
+\date{\normalsize\today}
+
+\begin{document}
+\maketitle
+
+\section*{Cost function}
+
+To understand Equations~1-3 in the assignment; the cross entropy cost function from Equation~3 in \cite{burges2005learning} was considered:
+
+\begin{equation}
+C_{ij} = -\overline{P}_{ij} \cdot o_{ij} + \ln (1 + e^{o_{ij}})
+\end{equation}
+
+Where $\overline{P}_{ij}$ is the target probability of $f(\pmb{x}_i) > f(\pmb{x}_j)$ and $o_{ij} = f(\pmb{x}_i) - f(\pmb{x}_j)$. With the assignment notation this becomes:
+
+\begin{equation}
+C_{ab} = -\overline{P}_{ab} \cdot o_{ab} + \ln (1 + e^{o_{ab}}) = -1 \cdot o_{ab} + \ln (1 + e^{o_{ab}}) = -o_{ab} + \ln (1 + e^{o_{ab}})
+\end{equation}
+
+Given that the target probability of the network output given input pattern $a$ being greater than the network output given input pattern $b$ is $\overline{P}_{ab} = 1$ and that $o_{ab} = o_a - o_b$.
+
+\setlength\parindent{17pt}
+
+Differentiating the cost function with respect to the difference of the outputs gives the derivative of the cost function:
+
+\begin{equation}
+\begin{split}
+\frac{\partial C_{ab}}{\partial o_{ab}} &= \frac{\partial (-o_{ab} + \ln (1 + e^{o_{ab}}))}{\partial o_{ab}}
+= \frac{\partial (-o_{ab})}{\partial o_{ab}} + \frac{\partial \ln (1 + e^{o_{ab}})}{\partial o_{ab}}\\
+&= -1 + \frac{\partial \ln (1 + e^{o_{ab}})}{\partial (1 + e^{o_{ab}})} \cdot \frac{\partial (1 + e^{o_{ab}})}{o_{ab}}
+= -1 + \frac{1}{1 + e^{o_{ab}}} \cdot \Big(\frac{\partial 1}{\partial o_{ab}} + \frac{\partial e^{o_{ab}}}{\partial o_{ab}}\Big)\\
+&= -1 + \frac{1}{1 + e^{o_{ab}}} \cdot \Big(0 + e^{o_{ab}}\Big)
+= -1 + \frac{e^{o_{ab}}}{1 + e^{o_{ab}}}\\
+&= -1 + \frac{1}{1 + e^{-o_{ab}}}
+= -(1 - P_{ab})
+\end{split}
+\end{equation}
+
+When updating network parameters the negative of the cost derivative is used, since \textit{gradient descent} moves against the cost gradient in order to minimize cost.
+
+The negative of the derivative, $1 - P_{ab}$, which is used in Equations~2~and~3 of the assignment, can be rewritten as $\sigma (o_b - o_a)$, where $\sigma$ is the logistic function.
+
+\setlength\parindent{0pt}
+
+\section*{Implementation}
+
+The implementation mostly follows the comment suggestions. A few deviations are
+\begin{enumerate*}[label=\alph*)]
+\item training examples are shuffled for every epoch to improve convergence,
+\item $\sigma(x)(1 - \sigma(x))$ is used as the transfer function derivative,
+\item $\sigma(o_b - o_a)$ is used as the negative cost function derivative.
+\end{enumerate*}
+
+\section*{Optimizations}
+
+The following optimizations were implemented to improve program runtime ($\approx 2$X):
+
+\begin{enumerate}
+\item \texttt{NN.weightsInput} was changed to be $\texttt{numHidden} \times \texttt{numInputs}$, using the hidden node as its first index. This results in the propagate method accessing weights in proper row-major order.
+\item Caching was added internally to \texttt{countMisorderedPairs} such that network outputs are reused instead of reevaluated for the same data instance. This cache is recreated for every call to \texttt{countMisorderedPairs}, and provides a significant speedup since the same data instance can be part of several pairs.
+\item All deep copies in \texttt{NN} were replaced with reuse of the existing ``previous'' lists.
+\end{enumerate}
+
+\section*{Results}
+
+Figure~\ref{fig:averaged_classification_rate} shows the mean training- and test classification rates for 25~learning runs of 50~epochs each. The plot shows that the mean training classification rate surpasses the requirement of 75\% after 13~epochs, peaking at 75.85\% after 29~epochs. The peak mean test classification rate is 71\% after 23~epochs.
+
+\setlength\parindent{17pt}
+
+The plotted classification rates follow the expectation that the training classification rate converges and increasingly indicates overfitting. With overfitting, the test classification rate shows an indication of gradual decay. Further training would likely result in the test classification rate decaying further. Ideally the training classification rate would stay the same.
+
+Some stability issues were experienced when training. During some runs, training classification accuracy gradually dropped below 50-60\% without recovering after training for many epochs (>50). This behavior was also seen by other students in other implementations. One possible explanation may be that it is caused by poor weight initialization.
+
+\setlength\parindent{0pt}
+
+\newcommand{\plotrun}[1]{
+\begin{tikzpicture}
+\begin{axis}[ymin=0,ymax=100,xlabel={Generations},ylabel={Classification Rate (\%)}]
+\pgfplotstableread{#1}\datatable
+\addplot [color=Cyan, thick, no markers] table[x index=0,y index=1] {\datatable};
+\addplot [color=WildStrawberry, thick, no markers] table[x index=0,y index=2] {\datatable};
+\end{axis}
+\end{tikzpicture}
+}
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\begin{axis}[ymin=0,ymax=100,xmin=0,xmax=50,xlabel={Epochs},ylabel={Classification Rate (\%)}]
+\errorband{../data/runs-25-epochs-50-hidden-10-learning-rate-0.001.txt}{0}{1}{2}{Cyan}{0.3}
+\errorband{../data/runs-25-epochs-50-hidden-10-learning-rate-0.001.txt}{0}{3}{4}{WildStrawberry}{0.3}
+\addplot [color=Cyan, thick, no markers] table[x index=0,y index=1, col sep=space] {../data/runs-25-epochs-50-hidden-10-learning-rate-0.001.txt};
+\addplot [color=WildStrawberry, thick, no markers] table[x index=0,y index=3, col sep=space] {../data/runs-25-epochs-50-hidden-10-learning-rate-0.001.txt};
+\end{axis}
+\end{tikzpicture}
+\caption{Average classification rate for 25~training~runs of 50~epochs each, with the training data set in blue and the test data set in red. The shaded areas indicate standard deviation.}
+\label{fig:averaged_classification_rate}
+\end{figure}
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
+

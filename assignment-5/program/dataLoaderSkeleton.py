@@ -1,6 +1,9 @@
+#!/usr/bin/python3
 __author__ = 'kaiolae'
 __author__ = 'kaiolae'
 import Backprop_skeleton as Bp
+
+import itertools, operator, random, statistics
 
 #Class for holding your data - one object for each line in the dataset
 class dataInstance:
@@ -45,41 +48,71 @@ class dataHolder:
 
 
 def runRanker(trainingset, testset):
-    #TODO: Insert the code for training and testing your ranker here.
     #Dataholders for training and testset
     dhTraining = dataHolder(trainingset)
     dhTesting = dataHolder(testset)
 
-    #Creating an ANN instance - feel free to experiment with the learning rate (the third parameter).
-    nn = Bp.NN(46,10,0.001)
+    def buildPatterns(data):
+        rating = operator.attrgetter('rating')
 
-    #TODO: The lists below should hold training patterns in this format: [(data1Features,data2Features), (data1Features,data3Features), ... , (dataNFeatures,dataMFeatures)]
-    #TODO: The training set needs to have pairs ordered so the first item of the pair has a higher rating.
-    trainingPatterns = [] #For holding all the training patterns we will feed the network
-    testPatterns = [] #For holding all the test patterns we will feed the network
-    for qid in dhTraining.dataset.keys():
-        #This iterates through every query ID in our training set
-        dataInstance=dhTraining.dataset[qid] #All data instances (query, features, rating) for query qid
-        #TODO: Store the training instances into the trainingPatterns array. Remember to store them as pairs, where the first item is rated higher than the second.
-        #TODO: Hint: A good first step to get the pair ordering right, is to sort the instances based on their rating for this query. (sort by x.rating for each x in dataInstance)
+        patterns = [(a, b)
+                    for queryResults in data.dataset.values()
+                    for a, b in itertools.combinations(sorted(queryResults, key=rating, reverse=True), 2)
+                    if  a.rating != b.rating]
 
-    for qid in dhTesting.dataset.keys():
-        #This iterates through every query ID in our test set
-        dataInstance=dhTesting.dataset[qid]
-        #TODO: Store the test instances into the testPatterns array, once again as pairs.
-        #TODO: Hint: The testing will be easier for you if you also now order the pairs - it will make it easy to see if the ANN agrees with your ordering.
+        # Ensure that data is not ordered
+        random.shuffle(patterns)
 
-    #Check ANN performance before training
-    nn.countMisorderedPairs(testPatterns)
-    for i in range(25):
-        #Running 25 iterations, measuring testing performance after each round of training.
-        #Training
-        nn.train(trainingPatterns,iterations=1)
-        #Check ANN performance after training.
-        nn.countMisorderedPairs(testPatterns)
+        return patterns
 
-    #TODO: Store the data returned by countMisorderedPairs and plot it, showing how training and testing errors develop.
+    trainingPatterns = buildPatterns(dhTraining)
+    testPatterns     = buildPatterns(dhTesting)
 
+    runs          = 25
+    epochs        = 50
+    learning_rate = 0.001
+    hidden_nodes  = 10
 
+    results = [[] for _ in range(epochs + 1)]
+
+    for run in range(1, runs + 1):
+        #Creating an ANN instance - feel free to experiment with the learning rate (the third parameter).
+        nn = Bp.NN(46, hidden_nodes, learning_rate)
+
+        for epoch in range(epochs + 1):
+            random.shuffle(trainingPatterns)
+
+            if epoch > 0:
+                nn.train(trainingPatterns, iterations=1)
+
+            trainingClassificationRate = 100 * (1 - nn.countMisorderedPairs(trainingPatterns))
+            testClassificationRate     = 100 * (1 - nn.countMisorderedPairs(testPatterns))
+
+            results[epoch].append((trainingClassificationRate, testClassificationRate))
+
+            print('INFO run: {}/{} epoch: {}/{} training classification rate: {}% test classification rate: {}%'.format(
+                run, runs, epoch, epochs,
+                round(trainingClassificationRate, 2),
+                round(testClassificationRate, 2)))
+
+    for run in range(1, runs + 1):
+        with open('run-{}-epochs-{}-hidden-{}-learning-rate-{}.txt'.format(
+            run, epochs, hidden_nodes, learning_rate), 'w') as f:
+
+            for epoch in range(epochs + 1):
+                print('{} {} {}'.format(epoch, *results[epoch][run - 1]), file=f)
+
+    with open('runs-{}-epochs-{}-hidden-{}-learning-rate-{}.txt'.format(
+        runs, epochs, hidden_nodes, learning_rate), 'w') as f:
+
+        for epoch in range(epochs + 1):
+            trainingClassificationRates, testClassificationRates = zip(*results[epoch])
+
+            print('{} {} {} {} {}'.format(
+                epoch,
+                statistics.mean(trainingClassificationRates),
+                statistics.pstdev(trainingClassificationRates),
+                statistics.mean(testClassificationRates),
+                statistics.pstdev(testClassificationRates)), file=f)
 
 runRanker("train.txt","test.txt")

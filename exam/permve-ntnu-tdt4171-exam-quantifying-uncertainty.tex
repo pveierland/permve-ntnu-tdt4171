@@ -1,0 +1,323 @@
+\cardfrontfoot{Quantifying Uncertainty}
+
+\begin{flashcard}[Question]{Why does logic fail in an uncertain domain?}
+
+\begin{itemize}
+\item \textbf{Laziness:} It is too much work to enumerate all antecedents or consequents needed to ensure an exceptionless rule and too hard to use such rules.
+\item \textbf{Theoretical ignorance:} There is no complete theory for the domain.
+\item \textbf{Practical ignorance:} Even if all rules are known, there may be uncertainty due to lacking information.
+\end{itemize}
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{What are the ontological and epistemological commitments in logic- and in probability theory?}
+
+The ontological commitments of logic- and probability theory are the same: the world is composed of facts that do or do not hold.
+
+\medskip
+
+The epistemological commitments are different:
+
+\begin{itemize}
+\item A logical agent will believe a statement is either true or not true.
+\item A probabilistic agent will hold a statement to be true to a degree of belief, e.g. ``0'' for a statement which is certainly false, and ``1'' for a statement which is certainly true.
+\end{itemize}
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{What is \textbf{decision theory}?}
+
+\textbf{Decision theory} is the theory of \textit{rational decisions}, combining the application of \textbf{probability theory}, to allow for \textit{uncertain knowledge}, with \textbf{utility theory}, to represent and reason with \textit{preferences}.
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{What is the principle of \textbf{maximum expected utility}?}
+
+The fundamental idea of \textbf{decision theory} is that \textit{an agent is rational if and only if it chooses the action that yields the highest expected utility, averaged over all the possible outcomes of the action}.
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{Describe the decision-theoretic agent algorithm}
+
+\textbf{function} \textsc{DT-Agent}(\textit{percept}) \textbf{returns} an \textit{action}
+
+\medskip
+
+\textbf{persistent:} \textit{belief\_state}, probabilistic beliefs about the current state of the world
+
+\textbf{persistent:} \textit{action}, the agent's action
+
+\medskip
+
+update \textit{belief\_state} based on \textit{action} and \textit{percept}
+
+calculate outcome probabilities for actions,
+
+~~~~given action descriptions and current \textit{belief\_state}
+
+select \textit{action} with highest expected utility
+
+~~~~given probabilities of outcomes and utility information
+
+return \textbf{action}
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{Define \textbf{sample space}\\and name two qualities its elements must fulfill.}
+
+\begin{itemize}
+\item \textbf{Sample space} is the set of all possible worlds, denoted by $\Omega$.
+\item $\omega$ refers to a particular world in $\Omega$.
+\item Possible worlds in the sample space must be \textit{mutually exclusive} and \textit{exhaustive}.
+\end{itemize}
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{What are the two basic axioms of probability theory?}
+
+\begin{enumerate}[label=\arabic*]
+\item Every possible world has a probability between 0 and 1.
+\item The total probability of the set of possible worlds is 1.
+\end{enumerate}
+
+\begin{displaymath}
+0 \leq P(\omega) \leq 1 \text{~for every~} \omega \text{~and~} \sum_{\omega \in \Omega} P(\omega) = 1.
+\end{displaymath}
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{What is a \textbf{probability model}?}
+
+A fully specified \textbf{probability model} associates a numerical probability $P(\omega)$ with each possible world.
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{What are \textbf{events} and \textbf{propositions}? \\ What is the probability associated with a \textbf{proposition}?}
+
+\textbf{Events} are \textit{sets} of worlds of some interest.
+
+\medskip
+
+\textbf{Propositions} describe \textbf{events} in a formal language and are denoted by $\phi$.
+
+\smallskip
+
+The probability associated with a proposition is defined to be \textit{the sum of the probabilities of the worlds in which it holds}:
+
+\begin{displaymath}
+\text{For any proposition~} \phi, P(\phi) = \sum_{\omega \in \phi} P(\omega).
+\end{displaymath}
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{What are \textbf{unconditional} and \textbf{conditional} probabilities?}
+
+\textbf{Unconditional} or \textbf{prior} probabilities refer to degrees of belief in \textbf{propositions} \textit{in the absence of any other information}, e.g. $P(\textit{doubles})$.
+
+\medskip
+
+\textbf{Conditional} or \textbf{posterior} probabilities refer to degrees of belief in \textbf{propositions} \textit{given the presence of} \textbf{evidence}, e.g. $P(\textit{doubles} \mid \textit{Die}_1 = 5)$.
+
+\medskip
+
+\textbf{Evidence} describes \textit{revealed information}.
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{What is the \textbf{product rule}?}
+
+\begin{center}
+For $a$ and $b$ to be true, we need $b$ to be true,\\and we also need $a$ to be true given $b$.
+\end{center}
+
+\begin{displaymath}
+P(a \land b) = P(a \mid b) \cdot P(b)
+\end{displaymath}
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{What are \textbf{probability distributions},\\\textbf{joint probability distributions},\\and \textbf{full joint probability distributions}?}
+
+A \textbf{probability distribution} describes the probability of each possible outcome of a \textit{random variable}:
+
+\medskip
+
+\begin{displaymath}
+\mathbf{P}(\textit{Weather}) = \langle 0.6, 0.1, 0.29, 0.01 \rangle
+\end{displaymath}
+
+\medskip
+
+A \textbf{joint probability distribution} describes the probability of each possible combined outcome for multiple \textit{random variables}.
+
+\begin{displaymath}
+\mathbf{P}(\textit{Weather, Cavity}) = \mathbf{P}(\textit{Weather} \mid \textit{Cavity}) \mathbf{P}(\textit{Cavity})
+\end{displaymath}
+
+\medskip
+
+A \textbf{full joint probability distribution} is given by the \textbf{joint probability distribution} of all \textit{random variables} under consideration.
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{What is a \textbf{possible world}?}
+
+A \textbf{possible world} is defined to be an assignment of values to all of the \textit{random variables} under consideration.
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{Show the derivation of $P(\neg a)$}
+
+{\begin{align*}
+P(\neg a)
+&= \sum_{\omega \in \neg a} P(\omega) \\
+&= \sum_{\omega \in \neg a} P(\omega) + \sum_{\omega \in a} P(\omega) - \sum_{\omega \in a} P(\omega) \\
+&= \sum_{\omega \in \Omega} P(\omega) - \sum_{\omega \in a} P(\omega) \\
+&= 1 - P(a)
+\end{align*}}
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{What is the \textbf{inclusion-exclusion principle}?}
+
+\begin{center}
+The cases where $a$ holds, together with the cases where $b$ holds,\\
+cover all cases where $a \lor b$ holds, but summing the two sets\\
+of cases counts their intersection twice, so we need to subtract $P(a \land b)$.
+\end{center}
+
+\begin{displaymath}
+P(a \lor b) = P(a) + P(b) - P(a \land b)
+\end{displaymath}
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{What did Bruno de Finetti prove regarding beliefs?}
+
+He proved that if \textit{Agent 1} expresses a set of degrees of belief that violate the axioms of probability theory then there is a combination of bets by \textit{Agent 2} that guarantees that \textit{Agent 1} will lose money every time.
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{What is \textbf{marginalization}?}
+
+\textbf{Marginalization} is the process of summing up the probabilities for a single, or set of variables $\mathbf{Y}$, for each possible value of the other variables $\mathbf{Z}$:
+
+\begin{displaymath}
+\mathbf{P}(\mathbf{Y}) = \sum_{\mathbf{z} \in \mathbf{Z}} \mathbf{P(Y, z)}
+\end{displaymath}
+
+\begin{center}
+for example:
+\end{center}
+
+\begin{displaymath}
+\mathbf{P}(\textit{Cavity}) = \sum_{\mathbf{z} \in \{\textit{Catch, Toothache}\}} \mathbf{P}(\textit{Cavity}, \mathbf{z})
+\end{displaymath}
+
+\begin{center}
+NB: Sometimes the set $\mathbf{Z}$ is left implicit: $\sum_{\mathbf{z}}$.
+\end{center}
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{What is \textbf{conditioning}?}
+
+\begin{center}
+\textbf{Conditioning} is a variant of \textbf{marginalization} with\\\textbf{conditional probabilities} instead of \textbf{joint probabilities}:
+\end{center}
+
+\begin{displaymath}
+\mathbf{P(Y)} = \sum_{\mathbf{z}}\mathbf{P(Y \mid z)}P(\mathbf{z})
+\end{displaymath}
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{What is \textbf{normalization}?}
+
+\begin{center}
+A \textbf{normalization constant} $\alpha$ ensures that a distribution adds up to 1.
+\end{center}
+
+\begin{displaymath}
+\mathbf{P}(X \mid \mathbf{e}) = \frac{\mathbf{P}(X, \mathbf{e})}{\mathbf{P(e)}} = \alpha \mathbf{P}(X, \mathbf{e}) = \alpha \sum_\mathbf{y} \mathbf{P}(X, \mathbf{e}, \mathbf{y})
+\end{displaymath}
+
+\begin{center}
+Where $X$ is the query variable,\\$\mathbf{e}$ is the list of observed values for the evidence variables $\mathbf{E}$,\\and $\mathbf{Y}$ is the set of remaining unobserved variables.
+\end{center}
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{What is \textbf{independence}?}
+\begin{center}
+
+Two events $a$ and $b$ are independent if the fact that $a$ occurs\\does not affect the probability of $b$ occurring.\\
+
+\medskip
+
+\textbf{Independence} between propositions $a$ and $b$ can be written as:
+\begin{displaymath}
+P(a \mid b) = P(a) \quad \text{or} \quad P(b \mid a) = P(b) \quad \text{or} \quad P(a \land b) = P(a) P(b)
+\end{displaymath}
+
+\medskip
+
+\textbf{Independence} between variables $X$ and $Y$ can be written as:
+\begin{displaymath}
+\mathbf{P}(X \mid Y) = \mathbf{P}(X) \quad \text{or} \quad \mathbf{P}(Y \mid X) = \mathbf{P}(Y) \quad \text{or} \quad \mathbf{P}(X, Y) = \mathbf{P}(X)\mathbf{P}(Y)
+\end{displaymath}
+
+\textbf{Independence} is also known as\\\textbf{marginal independence} or \textbf{absolute independence}.
+
+\end{center}
+\end{flashcard}
+
+\begin{flashcard}[Question]{What is \textbf{Bayes' theorem}?}
+\begin{center}
+
+Propositional form:
+\begin{displaymath}
+P(b \mid a) = \frac{P(a \mid b) P(b)}{P(a)}
+\end{displaymath}
+
+Multi-valued variable form:
+\begin{displaymath}
+\mathbf{P}(Y \mid X) = \frac{\mathbf{P}(X \mid Y) \mathbf{P}(Y)}{\mathbf{P}(X)}
+\end{displaymath}
+
+Multi-valued variable form, conditionalized on evidence $\mathbf{e}$:
+\begin{displaymath}
+\mathbf{P}(Y \mid X, \mathbf{e}) = \frac{\mathbf{P}(X \mid Y, \mathbf{e}) \mathbf{P}(Y \mid \mathbf{e})}{\mathbf{P}(X \mid \mathbf{e})}
+\end{displaymath}
+
+\end{center}
+\end{flashcard}
+
+\begin{flashcard}[Question]{What is \textbf{conditional independence}?}
+\begin{center}
+
+Two events $a$ and $b$ are \textbf{conditionally independent} of a third event $c$ if and only if the fact that $a$ occurs does not affect the probability of $b$ occurring, given that it is known whether or not $c$ has occurred.
+
+\medskip
+
+The general definition of \textbf{conditional independence} of two variables $X$ and $Y$, given a third variable $Z$, is given by:
+\begin{displaymath}
+\mathbf{P}(X, Y \mid Z) = \mathbf{P}(X \mid Z) \mathbf{P}(Y \mid Z)
+\end{displaymath}
+\begin{displaymath}
+\mathbf{P}(X \mid Y, Z) = \mathbf{P}(X \mid Z) \quad \text{and} \quad \mathbf{P}(Y \mid X, Z) = \mathbf{P}(Y \mid Z)
+\end{displaymath}
+
+\end{center}
+\end{flashcard}
+
+\begin{flashcard}[Question]{What is the \textbf{naive Bayes} model?}
+\begin{center}
+
+A \textbf{naive Bayes} model specifies a \textit{full joint distribution} where a\\single cause variable affects a series of effect variables that are all \textbf{conditionally independent} given the cause.
+\begin{displaymath}
+\mathbf{P}(\textit{Cause}, \textit{Effect}_1, \ldots, \textit{Effect}_n) = \mathbf{P}(\textit{Cause}) \prod_i \mathbf{P}(\textit{Effect}_i \mid \textit{Cause})
+\end{displaymath}
+
+\end{center}
+\end{flashcard}

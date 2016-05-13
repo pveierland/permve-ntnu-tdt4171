@@ -1,0 +1,158 @@
+\cardfrontfoot{Probabilistic Reasoning}
+
+\begin{flashcard}[Question]{How is a \textbf{Bayesian network} specified?}
+\begin{center}
+
+A \textbf{Bayesian network} is a \textit{directed acyclic graph} where each node\\is annotated with \textit{quantitative probability information}.
+\begin{enumerate}[label=\arabic*.]
+\item Each node corresponds to a \textbf{random variable}.
+\item Directed links connects pairs of nodes. A link from $X$ to $Y$ makes $X$ a \textit{parent} of $Y$.
+\item Each node $X_i$ has a \textbf{conditional probability distribution}\\$\mathbf{P}(X_i\mid\textit{Parents}(X_i))$ that quantifies the effect of the parents on the node.
+\end{enumerate}
+
+\end{center}
+\end{flashcard}
+
+\begin{flashcard}[Question]{How is a generic entry in the \textbf{full joint distribution} calculated?}
+\begin{center}
+
+\begin{displaymath}
+P(x_1, \ldots, x_n) = \prod_{i = 1}^{n} P(x_i\mid{}\textit{parents}(X_i))
+\end{displaymath}
+
+\end{center}
+\end{flashcard}
+
+\begin{flashcard}[Question]{How is the \textbf{chain rule} identity derived?}
+\begin{center}
+
+First, the entries in the \textbf{joint probability distribution} is written in terms of \textbf{conditional probability} using the \textbf{product rule}:
+\begin{displaymath}
+P(x_1, \ldots, x_n) = P(x_n \mid x_{n - 1}, \ldots, x_1) P(x_{n - 1}, \ldots, x_1)
+\end{displaymath}
+
+This process is repeated to build the \textbf{chain rule} identity:
+{\begin{align*}
+P(x_1, \ldots, x_n)
+&= P(x_n \mid x_{n - 1}, \ldots, x_1) P(x_{n - 1} \mid x_{n - 2}, \ldots, x_1) \cdots P(x_2 \mid x_1) P(x_1)\\
+&= \prod_{i = 1}^n P(x_i \mid x_{i - 1}, \ldots, x_1)
+\end{align*}}
+
+\end{center}
+\end{flashcard}
+
+\begin{flashcard}[Question]{How is a \textbf{Bayesian network} constructed?}
+\begin{enumerate}[label=\arabic*.]
+\item Determine the set of variables needed to model the domain and order them: ${X_1, \ldots, X_n}$. Having causes precede effects results in a more compact network.
+\item For $i = 1~\text{to}~n$ do:
+\begin{itemize}
+\item Choose from $X_1, \ldots, X_{i - 1}$ a minimal set of parents for $X_i$ such that $X_i$ is conditionally independent of the non-chosen predecessors.
+\item Create a link from each parent to $X_i$.
+\item Construct the \textbf{conditional probability table}:\\$\mathbf{P}(X_i \mid \textit{Parents}(X_i))$.
+\end{itemize}
+\end{enumerate}
+\end{flashcard}
+
+\begin{flashcard}[Question]{Can \textbf{Bayesian networks} contain redundancies?}
+\begin{center}
+No, a \textbf{Bayesian network} does not contain any redundant probability values. This means that the values in a \textbf{Bayesian network} cannot be inconsistent.
+\end{center}
+\end{flashcard}
+
+\begin{flashcard}[Question]{How does the \textbf{sparsity} of a \textbf{Bayesian network} affect its complexity?}
+\begin{center}
+If random variables in a \textbf{Bayesian network} are directly influenced by at most $k$ variables, then for a network with $n$ variables the total network can be specified by $n \cdot 2^k$ numbers.
+
+\medskip
+
+In contrast, the joint distribution contains $2^n$ values.
+\end{center}
+\end{flashcard}
+
+\begin{flashcard}[Question]{What are the two topological consequences of \textbf{Bayesian networks} with respect to \textbf{conditional independence}?}
+\begin{center}
+Each node is \textbf{conditionally independent}\\of its \textbf{non-descendants} given its parents.
+
+\medskip
+
+Each node is \textbf{conditionally independence} of\\all other nodes in the network, given its \textbf{Markov blanket},\\which is given by its parents, children, and children's parents.
+\end{center}
+\end{flashcard}
+
+\begin{flashcard}[Question]{What are examples of \textbf{canonical distributions}?}
+\begin{itemize}
+\item \textbf{Deterministic nodes} has their values specified exactly by the value of its parents with no uncertainty.
+\item \textbf{Noisy-OR} is a generalization of the \textbf{logical-OR} which allows for uncertainty about the ability of each parent to cause the child to be true.
+\item \textbf{Noisy-MAX}
+\end{itemize}
+\end{flashcard}
+
+\begin{flashcard}[Question]{What is the \textbf{noisy-OR} function, and what is its complexity?}
+\begin{center}
+The \textbf{noisy-OR} function works by assigning a probability $q_j$ that the value of a variable will \textbf{not be true}, given that \textbf{a parent $j$ is true}.
+\begin{displaymath}
+P(x_i \mid \textit{parents}(X_i)) = 1 - \prod_{\{j:X_j = \textit{true}\}}q_j
+\end{displaymath}
+
+\medskip
+
+A \textbf{noisy-OR} can be described using $k$ parameters instead of the $2^k$ parameters normally needed for a \textbf{conditional probability table}.
+\end{center}
+\end{flashcard}
+
+\begin{flashcard}[Question]{Describe the \textsc{Enumeration-Ask} algorithm.}
+\textbf{function} \textsc{Enumeration-Ask}($X, \mathbf{e}, \textit{bn}$) \textbf{returns} a distribution over $X$\\
+\-\quad$\mathbf{Q}(X) \gets$ a distribution over X, initially empty\\
+\-\quad\textbf{for each} value $x_i$ of $X$ \textbf{do}\\
+\-\quad\quad$\mathbf{Q}(x_i) \gets$ \textsc{Enumerate-All}($\textit{bn}.\textsc{Vars}, \mathbf{e}_{xi}$)\\
+\-\quad\quad\quad{}where $\mathbf{e}_{xi}$ is $\mathbf{e}$ extended with $X = x_i$\\
+\-\quad \textbf{return} \textsc{Normalize}($\mathbf{Q}(X)$)
+
+\medskip
+
+\textbf{function} \textsc{Enumerate-All}(\textit{vars}, $\mathbf{e}$) \textbf{returns} a real number\\
+\-\quad\textbf{if} \textsc{Empty?}(\textit{vars}) \textbf{then return} 1.0\\
+\-\quad $Y \gets$ \textsc{First}(\textit{vars})\\
+\-\quad \textbf{if} $Y$ has value $y$ in $\mathbf{e}$:\\
+\-\quad\quad \textbf{return} $P(y \mid \textit{parents}(Y)) \times \textsc{Enumerate-All}(\textsc{Rest}(\textit{vars}), \mathbf{e})$\\
+\-\quad \textbf{else:}\\
+\-\quad\quad \textbf{return} $\sum_y P(y \mid \textit{parents}(Y)) \times \textsc{Enumerate-All}(\textsc{Rest}(\textit{vars}), \mathbf{e}_y)$\\
+\-\quad\quad\quad where $\mathbf{e}_y$ is $\mathbf{e}$ extended with $Y = y$
+
+\end{flashcard}
+
+\begin{flashcard}[Question]{What are three desirable properties of\\\textbf{logical rule-based systems}?}
+\begin{itemize}
+\item \textbf{Locality} allows application of some rules with some evidence separately, e.g. for a rule $A \implies B$, $B$ can be concluded if there is evidence for $A$, without worrying about other rules. In probabilistic systems, all evidence must be considered.
+\item \textbf{Detachment} allows a derived proposition to be used regardless of how it was derived, i.e. it can be \textbf{detached} from its justification. With probabilities, the source of the evidence for a belief is important for subsequent reasoning.
+\item \textbf{Truth-functionality} allows the truth of complex logical sentences to be determined through computing the truth of its components. Without strong global independence assumptions probability combination does not work the same way.
+\end{itemize}
+\end{flashcard}
+
+\begin{flashcard}[Question]{What is \textbf{Dempster--Shafer} theory?}
+\begin{center}
+\textbf{Dempster-Shafer} deals with the distinction between \textbf{uncertainty} and \textbf{ignorance} by computing the probability of the evidence supporting the proposition, instead of computing the probability of a proposition.
+\end{center}
+\end{flashcard}
+
+\begin{flashcard}[Question]{What is \textbf{fuzzy set theory}?}
+\textbf{Fuzzy set theory} is a means of specifying \textbf{vagueness} and is not concerned with the orthogonal concept of \textbf{uncertainty}. Instead of \textbf{Tall} being a binary property, it can instead be a fuzzy predicate where the truth value of $\textit{Tall}(X)$ is a number between 0 and 1 indicating the ``tallness'' of $X$.
+\end{flashcard}
+
+\begin{flashcard}[Question]{What are the standard rules for evaluating \textbf{fuzzy logic}, and what is a central problem in its truth-functional approach?}
+\begin{displaymath}
+T(A \land B) = \min(T(A), T(B))
+\end{displaymath}
+\begin{displaymath}
+T(A \lor  B) = \max(T(A), T(B))
+\end{displaymath}
+\begin{displaymath}
+T(\neg A) = 1 - T(A)
+\end{displaymath}
+\begin{center}
+
+\medskip
+
+A central problem in the truth-functioning of \textbf{fuzzy logic} is its inability to take into account the correlations or anti-correlations between component propositions.
+\end{center}
+\end{flashcard}

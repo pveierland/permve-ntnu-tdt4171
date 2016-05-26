@@ -1,51 +1,160 @@
 \cardfrontfoot{Probabilistic Reasoning Over Time}
 
-\begin{flashcard}[Question]{}
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+
+\begin{flashcard}[Question]{What is the \textbf{Markov assumption}?}
+\begin{center}
+The \textbf{Markov assumption} is that the current state depends only on a \textit{finite, fixed number} of previous states.
+\end{center}
 \end{flashcard}
 
-\begin{flashcard}[Question]{}
+\begin{flashcard}[Question]{What is a \textbf{Markov process}, what does the \textbf{order} indicate?\\Describe the notation for the assumption in a \textbf{first-order Markov process}.}
+\begin{center}
+A \textbf{Markov process}, also known as a \textbf{Markov chain},\\is a process satisfying the \textbf{Markov assumption}.
+
+\medskip
+
+The \textbf{order} of a \textbf{Markov process} indicates\\the number of previous states it depends on.
+
+\medskip
+
+A \textbf{first-order Markov process} uses the \textbf{transition model} assumption:
+\begin{displaymath}
+\mathbf{P}(\mathbf{X}_t \mid \mathbf{X}_{0:t-1}) = \mathbf{P}(\mathbf{X}_t \mid \mathbf{X}_{t-1})
+\end{displaymath}
+\end{center}
 \end{flashcard}
 
-\begin{flashcard}[Question]{}
+\begin{flashcard}[Question]{What is the \textbf{stationary process assumption}?}
+\begin{center}
+The \textbf{stationary process assumption} states that a process of change is governed by laws that do not themselves change over time, i.e. the \textbf{transition model} is fixed over time.
+\end{center}
 \end{flashcard}
 
-\begin{flashcard}[Question]{}
+\begin{flashcard}[Question]{What is the \textbf{sensor Markov assumption}?}
+\begin{center}
+The \textbf{sensor Markov assumption} states that the evidence variables $\mathbf{E}_t$ depends only on the current state variables $\mathbf{X}_t$, and not on previous state variables.
+\begin{displaymath}
+\mathbf{P}(\mathbf{E}_t \mid \mathbf{X}_{0:t}, \mathbf{E}_{0:t-1}) = \mathbf{P}(\mathbf{E}_t \mid \mathbf{X}_t)
+\end{displaymath}
+\end{center}
 \end{flashcard}
 
-\begin{flashcard}[Question]{}
+\begin{flashcard}[Question]{How is the \textbf{complete joint distribution} for a\\\textbf{first-order Markov process} calculated?}
+\begin{displaymath}
+\mathbf{P}(\mathbf{X}_{0:t}, \mathbf{E}_{1:t}) = \mathbf{P}(\mathbf{X}_0) \prod_{i = 1}^t \mathbf{P}(\mathbf{X}_i \mid \mathbf{X}_{i - 1}) \mathbf{P}(\mathbf{E}_i \mid \mathbf{X}_i)
+\end{displaymath}
 \end{flashcard}
 
-\begin{flashcard}[Question]{}
+\begin{flashcard}[Question]{What are the two ways of improving the accuracy of a \textbf{Markov process}?}
+\begin{center}
+\begin{enumerate}[label=\arabic*.]
+\item Increasing the order of the \textbf{Markov process}.
+\item Increasing the set of \textbf{state variables}.
+\end{enumerate}
+
+\bigskip
+
+NB: Increasing the order can always be reformulated\\as an increase in the set of state variables.
+\end{center}
 \end{flashcard}
 
-\begin{flashcard}[Question]{}
+\begin{flashcard}[Question]{What are the four basic \textbf{inference tasks} in \textbf{temporal models}?}
+\begin{center}
+\begin{itemize}
+\item \textbf{Filtering}, also known as \textbf{state estimation}, is the task of computing posterior distribution over the most recent state, also known as the \textbf{belief state}, given all evidence up to the present: $\mathbf{P}(\mathbf{X}_t \mid \mathbf{e}_{1:t})$.
+\item \textbf{Prediction} is the task of computing the posterior distribution over the future state, given all evidence up to the present:\\$\mathbf{P}(\mathbf{X}_{t + k} \mid \mathbf{e}_{1:t})$ for some $k > 0$.
+\item \textbf{Smoothing} is the task of computing the posterior distribution over a past state, given all evidence up to the present: $\mathbf{P}(\mathbf{X}_k \mid \mathbf{e}_{1:t})$.
+\item \textbf{Most likely explanation} is the task of finding the most likely explanation for a set of observations: $\argmax_{\mathbf{x}_{1:t}} P(\mathbf{x}_{1:t} \mid \mathbf{e}_{1:t})$.
+\end{itemize}
+\end{center}
 \end{flashcard}
 
-\begin{flashcard}[Question]{}
+\begin{flashcard}[Question]{Show the derivation for \textbf{recursive estimation}.}
+\begin{center}
+{\begin{align*}
+\mathbf{P}(\mathbf{X}_{t+1} \mid \mathbf{e}_{1:t+1})
+&= \mathbf{P}(\mathbf{X}_{t+1} \mid \mathbf{e}_{1:t}, \mathbf{e}_{t+1})\\
+&= \alpha \underbrace{\mathbf{P}(\mathbf{e}_{t+1} \mid \mathbf{X}_{t+1}, \mathbf{e}_{1:t})}_\text{Sensor Markov assumption} \mathbf{P}(\mathbf{X}_{t+1} \mid \mathbf{e}_{1:t})\\
+&= \alpha\, \mathbf{P}(\mathbf{e}_{t+1} \mid \mathbf{X}_{t+1}) \mathbf{P}(\mathbf{X}_{t+1} \mid \mathbf{e}_{1:t})\\
+&= \alpha\, \mathbf{P}(\mathbf{e}_{t+1} \mid \mathbf{X}_{t+1}) \sum_{\mathbf{x}_t} \underbrace{\mathbf{P}(\mathbf{X}_{t+1} \mid \mathbf{x}_t, \mathbf{e}_{1:t})}_\text{Markov assumption} P(\mathbf{x}_t \mid \mathbf{e}_{1:t})\\
+&= \alpha\, \mathbf{P}(\mathbf{e}_{t+1} \mid \mathbf{X}_{t+1}) \sum_{\mathbf{x}_t} \mathbf{P}(\mathbf{X}_{t+1} \mid \mathbf{x}_t) P(\mathbf{x}_t \mid \mathbf{e}_{1:t})\\
+&= \mathbf{f}_{1:t+1} = \alpha\, \textsc{Forward}(\mathbf{f}_{1:t}, \mathbf{e}_{t+1})
+\end{align*}}
+\end{center}
 \end{flashcard}
 
-\begin{flashcard}[Question]{}
+\begin{flashcard}[Question]{What is the formula for \textbf{recursive prediction}?}
+\begin{displaymath}
+\mathbf{P}(\mathbf{X}_{t+k+1} \mid \mathbf{e}_{1:t}) = \sum_{\mathbf{x}_{t+k}} \mathbf{P}(\mathbf{X}_{t+k+1} \mid \mathbf{x}_{t+k}) P(\mathbf{x}_{t+k} \mid \mathbf{e}_{1:t})
+\end{displaymath}
 \end{flashcard}
 
-\begin{flashcard}[Question]{}
+\begin{flashcard}[Question]{What is \textbf{mixing time}?}
+\begin{center}
+\textbf{Mixing time} is the approximate time that it takes to reach the\\\textbf{fixed point} during \textbf{prediction}. The \textbf{predicted state distribution} will converge towards the \textbf{stationary distribution} of the\\\textbf{Markov process} as defined by the \textbf{transition model}.
+\end{center}
 \end{flashcard}
 
-\begin{flashcard}[Question]{}
+\begin{flashcard}[Question]{How is the \textbf{likelihood} of an \textbf{evidence sequence} recursively computed, and what is it useful for?}
+\begin{center}
+A \textbf{likelihood message} is defined as:
+\begin{displaymath}
+\ell_{1:t}(\mathbf{X}_t) = \mathbf{P}(\mathbf{X}_t, \mathbf{e}_{1:t})
+\end{displaymath}
+which can be propagated forward:
+\begin{displaymath}
+\ell_{1:t+1} = \textsc{Forward}(\ell_{1:t}, \mathbf{e}_{t+1})
+\end{displaymath}
+After computing $\ell_{1:t}$, the actual \textbf{likelihood} can be computed as:
+\begin{displaymath}
+L_{1:t} = P(\mathbf{e}_{1:t}) = \sum_{\mathbf{x}_t} \ell_{1:t} \mathbf{x}_t
+\end{displaymath}
+\textbf{Likelihood} can be used to compare different temporal models.
+\end{center}
 \end{flashcard}
 
-\begin{flashcard}[Question]{}
+\begin{flashcard}[Question]{What is a \textbf{hidden Markov model}?}
+\begin{center}
+A \textbf{hidden Markov model} is a temporal probabilistic model with a \textbf{single discrete random state variable}.
+\end{center}
 \end{flashcard}
 
-\begin{flashcard}[Question]{}
+\begin{flashcard}[Question]{Which two algorithms can be derived by using matrix notation for \textbf{hidden Markov models}?}
+\begin{itemize}
+\item The \textsc{Forward-Backward} algorithm can be evaluated in constant space by first doing a forward pass to compute $\mathbf{f}_{t:t}$, and then propagating $\mathbf{b}$ and $\mathbf{f}$ backwards together to compute the smoothed estimate at each step.
+\item The \textsc{Fixed-Lag-Smoothing} algorithm can be evaluated in a manner which time complexity is independent of the length of the lag.
+\end{itemize}
 \end{flashcard}
 
-\begin{flashcard}[Question]{}
+\begin{flashcard}[Question]{What is a \textbf{Kalman filter},\\an \textbf{extended Kalman filter},\\and a \textbf{switching Kalman filter}?}
+\begin{center}
+A \textbf{Kalman filter} is an algorithm for performing \textbf{state estimation} with \textbf{continuous variables} through assuming a \textbf{linear Gaussian} transition and sensor model.
+
+\medskip
+
+The \textbf{extended Kalman filter} is a non-linear version of the \textbf{Kalman filter} which linearizes about an estimate of the current mean and covariance.
+
+\medskip
+
+The \textbf{switching Kalman filter} is a mix of multiple \textbf{Kalman filters} in parallel, each using a different model of the system. A weighted sum of predictions is used, where each weight depends on how well each filter fits the current data.
+\end{center}
 \end{flashcard}
 
-\begin{flashcard}[Question]{}
+\begin{flashcard}[Question]{What is a \textbf{dynamic Bayesian network}?}
+\begin{center}
+A \textbf{dynamic Bayesian network} can have any number of state variables and evidence variables. The advantage compared to a \textbf{hidden Markov model} is the sparsity in the temporal probability model.
+
+\medskip
+
+Specifying a \textbf{dynamic Bayesian network} requires both a transition model and sensor model, but also requires that the topology between the variables in the subsequent time slices is specified.
+\end{center}
 \end{flashcard}
 
-\begin{flashcard}[Question]{}
+\begin{flashcard}[Question]{Can exact inference be used in \textbf{dynamic Bayesian networks}?}
+\begin{center}
+Yes, but as the size complexity is $O(d^{n+k})$ and the time complexity is $O(d^{2n})$ it becomes infeasible for a large number of variables.
+\end{center}
 \end{flashcard}
 
 \begin{flashcard}[Question]{}
